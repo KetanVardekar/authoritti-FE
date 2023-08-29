@@ -1,0 +1,22 @@
+<div style="height: calc(93vh - 10px);overflow-y: auto;">
+  <ng-container *ngIf="addedReport && reportType == 'archetype'">
+    <app-arc-type [data]="pageData" [appUpdatedOn]="appUpdatedAt" [reportData]="addedReport"></app-arc-type>
+  </ng-container>
+  <ng-container *ngIf="addedReport && reportType == 'driver'">
+    <app-egoistic-type [data]="pageData" [appUpdatedOn]="appUpdatedAt" [reportData]="addedReport"></app-egoistic-type>
+  </ng-container>
+  <ng-container *ngIf="addedReport && reportType == 'skills'">
+    <app-skill-type [data]="pageData"  [appUpdatedOn]="appUpdatedAt" [reportType]="reportType" [reportData]="addedReport"></app-skill-type>
+  </ng-container>
+  <ng-container *ngIf="addedReport && reportType == 'traits'">
+    <app-trait-type [data]="pageData" [appUpdatedOn]="appUpdatedAt" [reportType]="reportType" [reportData]="addedReport"></app-trait-type>
+  </ng-container>
+  <ng-container *ngIf="reportType == 'financialGoals'">
+    <app-financial-goals></app-financial-goals>
+  </ng-container>
+  <ng-container *ngIf="addedReport &&
+      (reportType == 'simple' || reportType == 'emotions' || reportType == 'naturalGifts')">
+    <app-simple [data]="pageData" [reportType]="reportType" [reportData]="addedReport" [appUpdatedOn]="appUpdatedAt"></app-simple>
+  </ng-container>
+
+</div>

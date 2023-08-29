@@ -1,0 +1,16 @@
+.header{
+  padding: 13px;
+  display: flex;
+    justify-content: space-around;
+    border: 1px solid;
+    box-shadow: 1px 1px 1px 1px;
+}
+::ng-deep.ng-select .ng-select-container {
+  color: #333;
+border: none !important;
+}
+
+::ng-deep.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container{
+  border-color: none !important;
+  /* box-shadow: 0 0 0 0.2rem #e91e63 !important; */
+}

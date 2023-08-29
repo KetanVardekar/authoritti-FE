@@ -1,0 +1,13 @@
+.header {
+  padding: 13px;
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid;
+  box-shadow: 1px 1px 1px 1px;
+}
+
+.body{
+  padding: 13px;
+  display: flex;
+  justify-content: space-around;
+}

@@ -1,0 +1,68 @@
+<ng-container *ngIf="tableDropDownDataList.source == 'slider'">
+  <div class="row m-0">
+    <div class="col-md-12">
+      <table class="table mt-5" style="color: white; border-left: 3px solid black;">
+        <thead style="text-align: center;">
+          <tr>
+            <th scope="col">{{tableDropDownDataList.colOneTitle
+              }}</th>
+            <th scope="col">{{tableDropDownDataList.colTwoTitle}}</th>
+            <th scope="col">{{tableDropDownDataList.colThreeTitle}}</th>
+          </tr>
+        </thead>
+        <tbody style="text-align: center;">
+          <tr *ngFor="let data of tabDropDownList;let i=index ">
+
+            <td>{{data.title}}</td>
+            <td>{{data.score}}</td>
+            <td class="d-flex justify-content-center">
+              <ng-select [searchable]="false" [clearable]="false" appendTo="body" name="group-{{i}}" id="{{i}}" required
+                placeholder="Select Group" [(ngModel)]="data.groupName" (change)="selectedGroup($event,i)">
+                <ng-option *ngFor="let list of tableDropDownDataList.options" [value]="list">{{list}}</ng-option>
+
+              </ng-select>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
+<!-- -----------Multi Choiice Group------------ -->
+
+
+<ng-container *ngIf="tableDropDownDataList.source == 'multiChoiceGroup'">
+  <div class="row m-0">
+    <div class="col-md-12">
+      <table class="table mt-5" style="color: white; border-left: 3px solid black;">
+        <thead style="text-align: center;">
+          <tr>
+            <th scope="col">{{tableDropDownDataList.colOneTitle}}</th>
+            <th scope="col">{{tableDropDownDataList.colTwoTitle}}</th>
+            <th scope="col">{{tableDropDownDataList.colThreeTitle}}</th>
+          </tr>
+        </thead>
+        <tbody style="text-align: center;">
+          <tr *ngFor="let arr of multiChoiceList;let i = index">
+
+            <ng-container *ngFor="let list of $any(arr|keyvalue)">
+              <td>{{list.key}}</td>
+              <td>{{list.value.title}}</td>
+
+
+
+              <td class="d-flex justify-content-center">
+                <ng-select [searchable]="false" [clearable]="false" appendTo="body" id="rank-{{i}}" required
+                  placeholder="Select Rank" name="rank-{{i}}" [(ngModel)]="list.value.rank" (change)="selectedRank($event,i)">
+                  <ng-option *ngFor="let list of tableDropDownDataList.options" [value]="list">{{list}}</ng-option>
+                </ng-select>
+              </td>
+            </ng-container>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>

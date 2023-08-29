@@ -1,0 +1,15 @@
+.table>thead {
+
+  background-color: #EF5EA7 !important;
+
+}
+
+.custom-col{
+  background-color: #f58b9e !important;
+  border: 2px solid black;
+}
+
+td:first-child {
+  background: #EF5EA7  !important;
+}
+

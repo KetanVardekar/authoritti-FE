@@ -1,0 +1,19 @@
+<div class="row mb-4 ques-container">
+  <div class="col-md-12" style="padding: 0;">
+
+    <span class="index p-1">#{{index + 1}}</span>
+
+    <div class="col-md-12 p-0 mt-3">
+      <span>{{data.title}}</span>
+    </div>
+    <div class="col-md-12 p-0 mt-1">
+      <span style="color: grey;">{{data.description
+        }}</span>
+    </div>
+    <div class="col-md-12 p-0" *ngFor="let placeholder of  data.placeholder;let i =index">
+      <textarea  rows="2" name="placeholder-{{i}}" class="form-control form-control-lg mt-3"
+        [(ngModel)]="placeholder.value" [placeholder]="placeholder.placeholder"
+        (change)="placeholderChange(placeholder)" required></textarea>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,404 @@
+<div style="max-height: calc(93vh - 13px);overflow-y: auto;height: auto;">
+  <div class="row" style="margin: 0;">
+    <div class="col-md-12 mt-4">
+      <!-- <div class="d-flex justify-content-center">
+        <h4 *ngIf="!questionId">New Question</h4>
+        <h4 *ngIf="questionId">Edit Question</h4>
+      </div> -->
+      <div style="display: flex;justify-content: end;">
+        <i (click)="cancel()" style="color: #e91e63;
+      font-size: 25px;" class="fa fa-arrow-circle-left pointer" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin: 15px;">
+    <div class="col-md-12">
+      <div class="form-group ">
+        <label for="questionstype">Type</label>
+        <ng-select appendTo="body" name="questionsType" required placeholder="Select Type" [(ngModel)]="selectedType"
+          #type="ngModel" [disabled]="questionId">
+          <ng-option value="multipleChoice">Multi Choice</ng-option>
+          <ng-option value="multiTextInput">Multi Text Input</ng-option>
+          <ng-option value="singleChoice">Single Choice</ng-option>
+          <ng-option value="slider">Slider</ng-option>
+          <ng-option value="textArea">Text Area</ng-option>
+          <ng-option value="textInput">Text Input</ng-option>
+        </ng-select>
+
+      </div>
+    </div>
+
+    <!-- ---------------------- Multi Choice------------- -->
+    <ng-container *ngIf="selectedType == 'multipleChoice'">
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Title *</label>
+          <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title" required
+            [(ngModel)]="multipleChoicePayload.title" #mcTitle="ngModel">
+          <small style="color: #e91e63;"
+            *ngIf="(mcTitle.touched || formSubmiited) && mcTitle.errors?.['required']">Title
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Description</label>
+          <input type="text" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+            [(ngModel)]="multipleChoicePayload.description">
+        </div>
+      </div>
+      <div class="col-md-12 mt-2 ">
+        <div class="d-flex">
+          <input class="pointer mt-1" type="checkbox" name="divide" id="divideInGroups" [(ngModel)]="multipleChoicePayload.divideInGroups"> &nbsp;&nbsp;
+          <label for="divideInGroups" class="pointer" style="margin-top: 2px;" >Divide In Groups</label>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group mt-2 ">
+          <label>Max Answer Count *</label>
+          <input type="number" pattern="\d+" name="answerCount" min="0" class="form-control form-control-lg" placeholder="Max Answer Count" required
+            [(ngModel)]="multipleChoicePayload.maxAnswerCount" #maxAnsCount="ngModel" min="0">
+          <small style="color: grey;">(Zero = No Limit)</small><br>
+          <small style="color: #e91e63;"
+            *ngIf="(maxAnsCount.touched || formSubmiited) && maxAnsCount.errors?.['required']">Max Answer Count
+            is required</small>
+            <small style="color: #e91e63;"
+            *ngIf="(maxAnsCount.touched || formSubmiited) && maxAnsCount.errors?.['pattern']">Enter Positive Value</small>
+
+        </div>
+
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Options *</label>
+          <input type="text" name="options" class="form-control form-control-lg" placeholder="Type and Press Enter"
+            [(ngModel)]="mcqOptionsList" (keyup.enter)="addMcqOptions(mcqOptionsList);$event.stopPropagation()">
+        </div>
+      </div>
+      <div class="container">
+        <span class="badge" *ngFor="let mcqOption of multipleChoicePayload.options ;let i =index">
+          <span>{{mcqOption}}</span>
+          <span (click)="deleteMcqOptions(i)" class="p-2 pointer"><i class="fa fa-times" style="color:black"
+              aria-hidden="true"></i></span>
+
+        </span>
+
+      </div>
+      <div class="col-md-12">
+
+        <div class="d-flex mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <button class="btn submit-btn" (click)="addMultipleChoice()" *ngIf="!this.questionId">
+            Save
+          </button>
+          <button class="btn submit-btn" *ngIf="this.questionId" (click)="updateMultipleChoice()">
+            Update
+          </button>
+          <button class="btn submit-btn" style="background-color: #73736F !important;" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <!-- --------------------------------Multi Text Input------------- -->
+    <ng-container *ngIf="selectedType == 'multiTextInput'">
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Title *</label>
+          <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title"
+            [(ngModel)]=" multiTextPayload.title" required #mtTitle="ngModel">
+          <small style="color: #e91e63;"
+            *ngIf="(mtTitle.touched || formSubmiited) && mtTitle.errors?.['required']">Title
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Description</label>
+          <input type="text" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+            [(ngModel)]=" multiTextPayload.description">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">PlaceHolder's</label>
+          <div *ngFor="let place of multiTextPayload.placeholder;let i = index">
+            <div class="row" style="margin: 10px 0px;">
+              <div class="col-md-10" style="padding: 0;">
+                <input type="text" name="place{{i}}" class="form-control form-control-lg" placeholder="Placeholder/Hint"
+                  [(ngModel)]="place.placeholder">
+              </div>
+              <div class="col-md-1 pointer" style="display: flex;
+              justify-content: center;
+              align-items: center;">
+                <i class="fa fa-plus-circle" style="color: #e91e63;
+                font-size: 20px;" (click)="addPlaceholder()" *ngIf="i == (multiTextPayload.placeholder.length - 1)"
+                  aria-hidden="true"></i>
+              </div>
+              <div class="col-md-1 pointer" style="display: flex;
+              justify-content: center;
+              align-items: center;" (click)="removePlaceholder(i)">
+                <i class="fa fa-minus-circle" style="color: #e91e63;
+                font-size: 20px;" aria-hidden="true"></i>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-12">
+
+        <div class="d-flex mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <button class="btn submit-btn" *ngIf="!this.questionId" (click)="addMultiText()">
+            Save
+          </button>
+          <button class="btn submit-btn" *ngIf="this.questionId" (click)="updateMultiTextInput()">
+            Update
+          </button>
+          <button class="btn submit-btn" style="background-color: #73736F !important;" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ---------------Single Choice---------------- -->
+    <ng-container *ngIf="selectedType == 'singleChoice'">
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Title *</label>
+          <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title"
+            [(ngModel)]=" singleChoicePayload.title" required #scTitle="ngModel">
+          <small style="color: #e91e63;"
+            *ngIf="(scTitle.touched || formSubmiited) && scTitle.errors?.['required']">Title
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Description</label>
+          <input type="text" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+            [(ngModel)]=" singleChoicePayload.description">
+        </div>
+      </div>
+      <div class="col-md-12 mt-2 ">
+        <div class="d-flex">
+          <input class="pointer mt-1" id="includeOther" type="checkbox" name="include" [(ngModel)]=" singleChoicePayload.other"> &nbsp;&nbsp;
+          <label class="pointer" style="margin-top: 1px;" for=includeOther >Include Other</label>
+        </div>
+        <small class="mt-1" style="color: grey;">(Show textInput for the answer when selected)</small>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group mt-3 ">
+          <label>Options *</label>
+          <input type="text" name="options" class="form-control form-control-lg" placeholder="Type and Press Enter"
+            [(ngModel)]="singleChoice" (keyup.enter)="addSingleChoiceOptions(singleChoice)" required>
+        </div>
+      </div>
+      <div class="container">
+        <span class="badge" *ngFor="let singleChoiceoption of singleChoicePayload.options;let i =index">
+          <span>{{singleChoiceoption}}</span>
+          <span (click)="deleteSingleChoiceOptions(i)" class="p-2 pointer"><i class="fa fa-times" style="color:black"
+              aria-hidden="true"></i></span>
+
+        </span>
+
+      </div>
+      <div class="col-md-12">
+
+        <div class="d-flex mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <button class="btn submit-btn" *ngIf="!this.questionId" (click)="addSingleChoice()">
+            Save
+          </button>
+          <button class="btn submit-btn" *ngIf="this.questionId" (click)="updateSingleChoice()">
+            Update
+          </button>
+          <button class="btn submit-btn" style="background-color: #73736F !important;" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ------------------------------Slider------------------- -->
+    <ng-container *ngIf="selectedType == 'slider'">
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Title *</label>
+          <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title"
+            [(ngModel)]="sliderPayload.title" required #sliderTitle="ngModel">
+          <small style="color: #e91e63;"
+            *ngIf="(sliderTitle.touched || formSubmiited) && sliderTitle.errors?.['required']">Title
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Description</label>
+          <input type="text" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+            [(ngModel)]="sliderPayload.description">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Minimum Value *</label>
+          <input type="number" pattern="\d+" name="minValue" min="0" class="form-control form-control-lg" placeholder="Enter Min Value"
+            [(ngModel)]="sliderPayload.minVal" required #minValue="ngModel">
+          <small style="color: #e91e63;"
+            *ngIf="(minValue.touched || formSubmiited) && minValue.errors?.['required']">Minimum Value
+            is required</small>
+            <small style="color: #e91e63;"
+            *ngIf="(minValue.touched || formSubmiited) && minValue.errors?.['pattern']">Enter Positve Value</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Maximum Value *</label>
+          <input type="number" pattern="\d+" name="maxValue" class="form-control form-control-lg" min="0" placeholder="Enter Max Value"
+            [(ngModel)]="sliderPayload.maxVal" required #maxValue="ngModel">
+          <small style="color: #e91e63;"
+            *ngIf="(maxValue.touched || formSubmiited) && maxValue.errors?.['required']">Max Value
+            is required</small>
+            <small style="color: #e91e63;"
+            *ngIf="(maxValue.touched || formSubmiited) && maxValue.errors?.['pattern']">Enter Positve Value</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Default Answer *</label>
+          <input type="number" pattern="\d+" name="defaultAnswer" class="form-control form-control-lg" placeholder="Default Answer"
+            [(ngModel)]="sliderPayload.defaultAnswer" min="0" required #defVal="ngModel">
+          <small style="color: #e91e63;"
+            *ngIf="(defVal.touched || formSubmiited) && defVal.errors?.['required']">Default Answer
+            is required</small>
+            <small style="color: #e91e63;"
+            *ngIf="(defVal.touched || formSubmiited) && defVal.errors?.['pattern']">Enter Positve Value</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Minimum Value Label</label>
+          <input type="text" name="minValueLabel" class="form-control form-control-lg"
+            placeholder="Enter Min Value Label" [(ngModel)]="sliderPayload.minValLabel ">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Maximum Value Label</label>
+          <input type="text" name="maxValueLabel" class="form-control form-control-lg"
+            placeholder="Enter Max Value Label" [(ngModel)]="sliderPayload.maxValLabel ">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Tag *</label>
+          <input type="text" name="tag" class="form-control form-control-lg" placeholder="Type and Press Enter"
+            [(ngModel)]="tagList" (keyup.enter)="addSliderOptions(tagList)">
+        </div>
+      </div>
+      <div class="container">
+        <span class="badge" *ngFor="let sliderTag of sliderPayload.tag;let i =index">
+          <span>{{sliderTag}}</span>
+          <span (click)="deleteSliderOptions(i)" class="p-2 pointer"><i class="fa fa-times" style="color:black"
+              aria-hidden="true"></i></span>
+
+        </span>
+
+      </div>
+      <div class="col-md-12">
+        <div class="d-flex mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <button class="btn submit-btn" (click)="addSlider()" *ngIf="!this.questionId">
+            Save
+          </button>
+          <button class="btn submit-btn" *ngIf="this.questionId" (click)="updateSlider()">
+            Update
+          </button>
+          <button class="btn submit-btn" style="background-color: #73736F !important;" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <!-- -------------------Text Area------ -->
+    <ng-container *ngIf="selectedType == 'textArea'">
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Title *</label>
+          <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title"
+            [(ngModel)]="textAreaPayload.title" #textAreaTitle="ngModel" required>
+          <small style="color: #e91e63;"
+            *ngIf="(textAreaTitle.touched || formSubmiited) && textAreaTitle.errors?.['required']">Title
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Description</label>
+          <input type="text" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+            [(ngModel)]="textAreaPayload.description" required>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Placeholder</label>
+          <input type="text" name="answer" class="form-control form-control-lg" placeholder="Placeholder/Hint"
+            [(ngModel)]="textAreaPayload.placeholder" required>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="d-flex mb-3" style="margin-top: 39px;justify-content: space-evenly">
+          <button class="btn submit-btn" *ngIf="!this.questionId" (click)="addTextArea()">
+            Save
+          </button>
+          <button class="btn submit-btn" *ngIf="this.questionId" (click)="updateTextArea()">
+            Update
+          </button>
+          <button class="btn submit-btn" style="background-color: #73736F !important;" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <!-- -------------------Text Input---------- -->
+    <ng-container *ngIf="selectedType == 'textInput'">
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Title *</label>
+          <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title"
+            [(ngModel)]="textInputPayload.title" #textInputTitle="ngModel" required>
+          <small style="color: #e91e63;"
+            *ngIf="(textInputTitle.touched || formSubmiited) && textInputTitle.errors?.['required']">Title
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Description</label>
+          <input type="text" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+            [(ngModel)]="textInputPayload.description" required>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Placeholder</label>
+          <input type="text" name="answer" class="form-control form-control-lg" placeholder="Placeholder/Hint"
+            [(ngModel)]="textInputPayload.placeholder" required>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="d-flex mb-3" style="margin-top: 39px;justify-content: space-evenly">
+          <button class="btn submit-btn" *ngIf="!this.questionId" (click)="addTextInput()">
+            Save
+          </button>
+          <button class="btn submit-btn" *ngIf="this.questionId" (click)="updateTextInput()">
+            Update
+          </button>
+          <button class="btn submit-btn" style="background-color: #73736F !important;" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+</div>

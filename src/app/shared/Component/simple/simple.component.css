@@ -1,0 +1,51 @@
+@media print {
+  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+             font-size: 12pt !important;
+             padding: 9px !important;
+             /* page-break-inside: avoid */
+
+      }
+      h1.entry-title {
+      font-size: 12pt !important;
+      padding: 9px !important;
+      /* page-break-inside: avoid */
+
+           }
+  }
+  @media print {
+    #print-section {
+         /* background-color: #1a4567 !important; */
+         -webkit-print-color-adjust: exact;
+         color: white !important;
+         page-break-inside: avoid;
+
+
+     }
+   }
+   @media screen {
+    .footer{
+      display: none;
+    }
+   }
+   @media print {
+.footer{
+  page-break-inside: avoid;
+
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+}
+   }
+@media print{
+  .authoritti-img{
+    max-width: 72%!important;
+  }
+}
+
+.header{
+  border: 1px solid #222428;
+  background-color: #222428;
+  color: white;
+  padding: 14px;
+
+}

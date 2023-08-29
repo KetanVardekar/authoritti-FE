@@ -1,0 +1,596 @@
+<div style="max-height: 80vh;overflow-y: auto;">
+
+  <div *ngIf="!printReportFlag">
+    <div class="row" style="margin: 0px;">
+      <div class="col-md-12">
+
+        <span class="d-flex justify-content-center my-4">
+          <h4 class="my-3">Summary</h4>
+        </span>
+
+        <div class="d-flex" style="justify-content: center;align-items: center;">
+          <span>Generate Report : </span>
+          <ng-select style="width: 15%;margin-left: 20px;" [searchable]="false" [clearable]="false" appendTo="body"
+            id="time" placeholder="Select Time" name="time" [(ngModel)]="this.appObj['reportType']">
+            <ng-option value="yearly">Yearly</ng-option>
+            <ng-option value="monthly">Monthly</ng-option>
+            <ng-option value="weekly">Weekly</ng-option>
+            <ng-option value="daily">Daily</ng-option>
+            <ng-option value="all">All</ng-option>
+          </ng-select>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="my-3" *ngIf="this.appObj['reportType'] == 'yearly' || this.appObj['reportType'] == 'all'">
+      <div class="row my-5" style="margin: 0;">
+        <div class="col-md-12 p-3" style="text-align: center;background-color: black;">
+          <span style="font-weight: bold;font-size: 20px;">Yearly</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" style="text-align: center;margin: 0;font-weight: bold;">
+        <div class="col-md-2">
+          <span>Product / Service</span>
+        </div>
+        <div class="col-md-1">
+          <span>Dollar Value</span>
+        </div>
+        <div class="col-md-2">
+          <span>Total Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Generated Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Close Rate</span>
+        </div>
+        <div class="col-md-1">
+          <span>Sales Required</span>
+        </div>
+        <div class="col-md-2">
+          <span>Qualified Leads Required</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" *ngFor="let item of this.appObj['leadsRequired'];let i = index"
+        style="text-align: center;align-items: center;margin: 0;">
+        <div class="col-md-2">
+          <span>{{item.product}}</span>
+        </div>
+        <div class="col-md-1">
+          <span>$ {{item.dollarPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.totalPercentageSales | number}} %</span>
+        </div>
+        <div class="col-md-2">
+          <span>$ {{item.totalSalesPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span *ngIf="item.closeRate == 2">50 % (1 in 2 sales)</span>
+          <span *ngIf="item.closeRate == 4">25 % (1 in 4 sales)</span>
+          <span *ngIf="item.closeRate == 10">10 % (1 in 10 sales)</span>
+        </div>
+        <div class="col-md-1">
+          <span>{{item.salesRequiredInUnits | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.requiredLeads | number}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-3" *ngIf="this.appObj['reportType'] == 'monthly' || this.appObj['reportType'] == 'all'">
+      <div class="row my-5" style="margin: 0;">
+        <div class="col-md-12 p-3" style="text-align: center;background-color: black;">
+          <span style="font-weight: bold;font-size: 20px;">Monthly</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" style="text-align: center;margin: 0;font-weight: bold;">
+        <div class="col-md-2">
+          <span>Product / Service</span>
+        </div>
+        <div class="col-md-1">
+          <span>Dollar Value</span>
+        </div>
+        <div class="col-md-2">
+          <span>Total Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Generated Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Close Rate</span>
+        </div>
+        <div class="col-md-1">
+          <span>Sales Required</span>
+        </div>
+        <div class="col-md-2">
+          <span>Qualified Leads Required</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" *ngFor="let item of this.appObj['leadsRequired'];let i = index"
+        style="text-align: center;align-items: center;margin: 0;">
+        <div class="col-md-2">
+          <span>{{item.product}}</span>
+        </div>
+        <div class="col-md-1">
+          <span>$ {{item.dollarPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.totalPercentageSales / 12 | number}} %</span>
+        </div>
+        <div class="col-md-2">
+          <span>$ {{item.totalSalesPerItem / 12 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span *ngIf="item.closeRate == 2">50 % (1 in 2 sales)</span>
+          <span *ngIf="item.closeRate == 4">25 % (1 in 4 sales)</span>
+          <span *ngIf="item.closeRate == 10">10 % (1 in 10 sales)</span>
+        </div>
+        <div class="col-md-1">
+          <span>{{item.salesRequiredInUnits / 12 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.requiredLeads / 12 | number}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-3" *ngIf="this.appObj['reportType'] == 'weekly' || this.appObj['reportType'] == 'all'">
+      <div class="row my-5" style="margin: 0;">
+        <div class="col-md-12 p-3" style="text-align: center;background-color: black;">
+          <span style="font-weight: bold;font-size: 20px;">Weekly</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" style="text-align: center;margin: 0;font-weight: bold;">
+        <div class="col-md-2">
+          <span>Product / Service</span>
+        </div>
+        <div class="col-md-1">
+          <span>Dollar Value</span>
+        </div>
+        <div class="col-md-2">
+          <span>Total Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Generated Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Close Rate</span>
+        </div>
+        <div class="col-md-1">
+          <span>Sales Required</span>
+        </div>
+        <div class="col-md-2">
+          <span>Qualified Leads Required</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" *ngFor="let item of this.appObj['leadsRequired'];let i = index"
+        style="text-align: center;align-items: center;margin: 0;">
+        <div class="col-md-2">
+          <span>{{item.product}}</span>
+        </div>
+        <div class="col-md-1">
+          <span>$ {{item.dollarPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.totalPercentageSales / 52 | number}} %</span>
+        </div>
+        <div class="col-md-2">
+          <span>$ {{item.totalSalesPerItem / 52 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span *ngIf="item.closeRate == 2">50 % (1 in 2 sales)</span>
+          <span *ngIf="item.closeRate == 4">25 % (1 in 4 sales)</span>
+          <span *ngIf="item.closeRate == 10">10 % (1 in 10 sales)</span>
+        </div>
+        <div class="col-md-1">
+          <span>{{item.salesRequiredInUnits / 52 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.requiredLeads / 52 | number}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-3" *ngIf="this.appObj['reportType'] == 'daily' || this.appObj['reportType'] == 'all'">
+      <div class="row my-5" style="margin: 0;">
+        <div class="col-md-12 p-3" style="text-align: center;background-color: black;">
+          <span style="font-weight: bold;font-size: 20px;">Daily</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" style="text-align: center;margin: 0;font-weight: bold;">
+        <div class="col-md-2">
+          <span>Product / Service</span>
+        </div>
+        <div class="col-md-1">
+          <span>Dollar Value</span>
+        </div>
+        <div class="col-md-2">
+          <span>Total Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Generated Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Close Rate</span>
+        </div>
+        <div class="col-md-1">
+          <span>Sales Required</span>
+        </div>
+        <div class="col-md-2">
+          <span>Qualified Leads Required</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" *ngFor="let item of this.appObj['leadsRequired'];let i = index"
+        style="text-align: center;align-items: center;margin: 0;">
+        <div class="col-md-2">
+          <span>{{item.product}}</span>
+        </div>
+        <div class="col-md-1">
+          <span>$ {{item.dollarPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.totalPercentageSales / 365 | number}} %</span>
+        </div>
+        <div class="col-md-2">
+          <span>$ {{item.totalSalesPerItem / 365 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span *ngIf="item.closeRate == 2">50 % (1 in 2 sales)</span>
+          <span *ngIf="item.closeRate == 4">25 % (1 in 4 sales)</span>
+          <span *ngIf="item.closeRate == 10">10 % (1 in 10 sales)</span>
+        </div>
+        <div class="col-md-1">
+          <span>{{item.salesRequiredInUnits / 365 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.requiredLeads / 365 | number}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="print-section" *ngIf="printReportFlag">
+    <div class="row" style="margin: 0px;">
+      <div class="col-md-12">
+        <div class="d-flex justify-content-center">
+          <img class="authoritti-img" src="../../../../assets/images/report-white.png" style="max-width: 32%;" alt="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mt-5">
+          <div class="d-flex justify-content-center">
+            <span>
+              {{userData.name}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;{{reportData.updatedAt | date}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mt-4">
+          <div class="d-flex justify-content-center">
+            <span style="font-size:25px ;">
+              Lead Calculator Report
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="my-3" *ngIf="this.appObj['reportType'] == 'yearly' || this.appObj['reportType'] == 'all'">
+      <div class="row my-5" style="margin: 0;">
+        <div class="col-md-12 p-3" style="text-align: center;background-color: black;">
+          <span style="font-weight: bold;font-size: 20px;">Yearly</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" style="text-align: center;margin: 0;font-weight: bold;">
+        <div class="col-md-2">
+          <span>Product / Service</span>
+        </div>
+        <div class="col-md-1">
+          <span>Dollar Value</span>
+        </div>
+        <div class="col-md-2">
+          <span>Total Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Generated Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Close Rate</span>
+        </div>
+        <div class="col-md-1">
+          <span>Sales Required</span>
+        </div>
+        <div class="col-md-2">
+          <span>Qualified Leads Required</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" *ngFor="let item of this.appObj['leadsRequired'];let i = index"
+        style="text-align: center;align-items: center;margin: 0;">
+        <div class="col-md-2">
+          <span>{{item.product}}</span>
+        </div>
+        <div class="col-md-1">
+          <span>$ {{item.dollarPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.totalPercentageSales | number}} %</span>
+        </div>
+        <div class="col-md-2">
+          <span>$ {{item.totalSalesPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span *ngIf="item.closeRate == 2">50 % (1 in 2 sales)</span>
+          <span *ngIf="item.closeRate == 4">25 % (1 in 4 sales)</span>
+          <span *ngIf="item.closeRate == 10">10 % (1 in 10 sales)</span>
+        </div>
+        <div class="col-md-1">
+          <span>{{item.salesRequiredInUnits | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.requiredLeads | number}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-3" *ngIf="this.appObj['reportType'] == 'monthly' || this.appObj['reportType'] == 'all'">
+      <div class="row my-5" style="margin: 0;">
+        <div class="col-md-12 p-3" style="text-align: center;background-color: black;">
+          <span style="font-weight: bold;font-size: 20px;">Monthly</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" style="text-align: center;margin: 0;font-weight: bold;">
+        <div class="col-md-2">
+          <span>Product / Service</span>
+        </div>
+        <div class="col-md-1">
+          <span>Dollar Value</span>
+        </div>
+        <div class="col-md-2">
+          <span>Total Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Generated Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Close Rate</span>
+        </div>
+        <div class="col-md-1">
+          <span>Sales Required</span>
+        </div>
+        <div class="col-md-2">
+          <span>Qualified Leads Required</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" *ngFor="let item of this.appObj['leadsRequired'];let i = index"
+        style="text-align: center;align-items: center;margin: 0;">
+        <div class="col-md-2">
+          <span>{{item.product}}</span>
+        </div>
+        <div class="col-md-1">
+          <span>$ {{item.dollarPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.totalPercentageSales / 12 | number}} %</span>
+        </div>
+        <div class="col-md-2">
+          <span>$ {{item.totalSalesPerItem / 12 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span *ngIf="item.closeRate == 2">50 % (1 in 2 sales)</span>
+          <span *ngIf="item.closeRate == 4">25 % (1 in 4 sales)</span>
+          <span *ngIf="item.closeRate == 10">10 % (1 in 10 sales)</span>
+        </div>
+        <div class="col-md-1">
+          <span>{{item.salesRequiredInUnits / 12 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.requiredLeads / 12 | number}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-3" *ngIf="this.appObj['reportType'] == 'weekly' || this.appObj['reportType'] == 'all'">
+      <div class="row my-5" style="margin: 0;">
+        <div class="col-md-12 p-3" style="text-align: center;background-color: black;">
+          <span style="font-weight: bold;font-size: 20px;">Weekly</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" style="text-align: center;margin: 0;font-weight: bold;">
+        <div class="col-md-2">
+          <span>Product / Service</span>
+        </div>
+        <div class="col-md-1">
+          <span>Dollar Value</span>
+        </div>
+        <div class="col-md-2">
+          <span>Total Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Generated Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Close Rate</span>
+        </div>
+        <div class="col-md-1">
+          <span>Sales Required</span>
+        </div>
+        <div class="col-md-2">
+          <span>Qualified Leads Required</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" *ngFor="let item of this.appObj['leadsRequired'];let i = index"
+        style="text-align: center;align-items: center;margin: 0;">
+        <div class="col-md-2">
+          <span>{{item.product}}</span>
+        </div>
+        <div class="col-md-1">
+          <span>$ {{item.dollarPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.totalPercentageSales / 52 | number}} %</span>
+        </div>
+        <div class="col-md-2">
+          <span>$ {{item.totalSalesPerItem / 52 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span *ngIf="item.closeRate == 2">50 % (1 in 2 sales)</span>
+          <span *ngIf="item.closeRate == 4">25 % (1 in 4 sales)</span>
+          <span *ngIf="item.closeRate == 10">10 % (1 in 10 sales)</span>
+        </div>
+        <div class="col-md-1">
+          <span>{{item.salesRequiredInUnits / 52 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.requiredLeads / 52 | number}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-3" *ngIf="this.appObj['reportType'] == 'daily' || this.appObj['reportType'] == 'all'">
+      <div class="row my-5" style="margin: 0;">
+        <div class="col-md-12 p-3" style="text-align: center;background-color: black;">
+          <span style="font-weight: bold;font-size: 20px;">Daily</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" style="text-align: center;margin: 0;font-weight: bold;">
+        <div class="col-md-2">
+          <span>Product / Service</span>
+        </div>
+        <div class="col-md-1">
+          <span>Dollar Value</span>
+        </div>
+        <div class="col-md-2">
+          <span>Total Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Generated Sales</span>
+        </div>
+        <div class="col-md-2">
+          <span>Close Rate</span>
+        </div>
+        <div class="col-md-1">
+          <span>Sales Required</span>
+        </div>
+        <div class="col-md-2">
+          <span>Qualified Leads Required</span>
+        </div>
+      </div>
+
+
+      <div class="row my-3" *ngFor="let item of this.appObj['leadsRequired'];let i = index"
+        style="text-align: center;align-items: center;margin: 0;">
+        <div class="col-md-2">
+          <span>{{item.product}}</span>
+        </div>
+        <div class="col-md-1">
+          <span>$ {{item.dollarPerItem | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.totalPercentageSales / 365 | number}} %</span>
+        </div>
+        <div class="col-md-2">
+          <span>$ {{item.totalSalesPerItem / 365 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span *ngIf="item.closeRate == 2">50 % (1 in 2 sales)</span>
+          <span *ngIf="item.closeRate == 4">25 % (1 in 4 sales)</span>
+          <span *ngIf="item.closeRate == 10">10 % (1 in 10 sales)</span>
+        </div>
+        <div class="col-md-1">
+          <span>{{item.salesRequiredInUnits / 365 | number}}</span>
+        </div>
+        <div class="col-md-2">
+          <span>{{item.requiredLeads / 365 | number}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">Copyright &#169; {{reportData.updatedAt | date}} Glory Autotech LLP</div>
+  </div>
+
+</div>
+
+
+
+
+
+<div style="visibility: hidden;">
+  <button id="print" printTitle="Lead Calculator" printSectionId="print-section" [useExistingCss]="true"
+    ngxPrint></button>
+</div>
+
+
+<div *ngIf="!fromPrint" class="row" style="
+    background-color: #746868;
+    padding: 8px;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;">
+
+  <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'" style="padding: 0">
+    <div class="d-flex" style="justify-content: space-between">
+      <div class="ml-3 mt-1">
+        Page 7/7
+      </div>
+      <div class="d-flex">
+        <div *ngIf="!printReportFlag">
+          <button (click)="previousPage()" class="btn submit-btn" style="background-color: #020201 !important">
+            Previous</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div *ngIf="!this.printReportFlag && !id">
+          <button (click)="submit()" class="btn submit-btn" style="background-color: #e91e63 !important">
+            Submit
+          </button>
+        </div>
+
+        <button (click)="updateReport()" *ngIf="!this.printReportFlag && id" class="btn submit-btn"
+          style="background-color: #E91E63 !important">
+          Update
+        </button>
+
+        <div *ngIf="this.printReportFlag">
+          <button (click)="PrintReport()" class="btn submit-btn" style="background-color: #e91e63 !important">
+            Print
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

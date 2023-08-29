@@ -1,0 +1,25 @@
+<div class="row m-0">
+  <div class="col-md-10 mt-5">
+    <div class="d-flex" class="header">
+      <div class="col-md-2">Name</div>
+      <div class="col-md-2">Score</div>
+      <div class="col-md-2">Score Name</div>
+      <div class="col-md-2">{{tableYesNoData.firstColumnTitle}}</div>
+      <div class="col-md-2">{{tableYesNoData.secondColumnTitle}}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row m-0" *ngFor="let item of yesNoArray;let i = index">
+  <div class="col-md-10 mt-4">
+    <div class="d-flex" class="body">
+      <div class="col-md-2">{{item.title}}</div>
+      <div class="col-md-2">{{item.score}}</div>
+      <div class="col-md-2">{{item.scoreName}}</div>
+      <div class="col-md-2"> <input class="pointer mr-2" name="{{i}}" type="radio" value="yes"
+          [(ngModel)]="item.isYesNo" (change)="changeAnswer($event,i)"></div>
+      <div class="col-md-2"> <input class="pointer mr-2" name="{{i}}" type="radio" value="no"
+          [(ngModel)]="item.isYesNo" (change)="changeAnswer($event,i)"></div>
+    </div>
+  </div>
+</div><!--  -->

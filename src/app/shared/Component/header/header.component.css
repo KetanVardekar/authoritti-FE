@@ -1,0 +1,7 @@
+.menu {
+  background-color: #e91e63;
+  padding: 13px;
+  display: flex;
+  font-size: 20px;
+  height: 55px;
+}

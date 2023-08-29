@@ -1,0 +1,19 @@
+<div class="row mb-4 ques-container">
+  <div class="col-md-12" style="padding: 0;">
+
+    <span class="index p-1">#{{index + 1}}</span>
+
+    <div class="col-md-12 p-0 mt-3">
+      <span>{{data.title}}</span>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-2 my-2" *ngFor="let radio of options;let i=index">
+        <div class="d-flex" style="align-items: center;">
+          <input class="pointer" [id]="radio.value" type="radio" [value]="radio.value" [checked]="radio.checked" name="radiogroup-{{index}}"
+            (change)="singleChoiceRadio($event ,radio.value ,i)">
+            <label  class="pointer" [for]="radio.value" >{{radio.value}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

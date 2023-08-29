@@ -1,0 +1,592 @@
+<!-- Pages -->
+<form #myForm="ngForm" (ngSubmit)="myForm.form.valid " style="height: calc(90vh - 10px);"
+  *ngIf="this.activeTab === 'page'">
+  <div class="row outer-container" style="margin: 0;">
+
+    <div class="mt-2" style="display: flex;justify-content: space-between;align-items: center;">
+      <div>
+        <div class="col-md-12 mt-2" style="padding: 0;" *ngIf="selectedOption == 'intro'">
+          <div class="d-flex" style="align-items: center;">
+            <input class="pointer" id="active" type="checkbox" [(ngModel)]="introPayload.active" name="active">
+            &nbsp;&nbsp;
+            <label class="pointer" for="active">Active</label>
+          </div>
+        </div>
+        <div class="col-md-12 mt-2" style="padding: 0;" *ngIf="selectedOption == 'section'">
+          <div class="d-flex" style="align-items: center;">
+            <input class="pointer" id="active" type="checkbox" [(ngModel)]="sectionPayload.active" name="active">
+            &nbsp;&nbsp;
+            <label class="pointer" for="active">Active</label>
+          </div>
+        </div>
+        <div class="col-md-12 mt-2" style="padding: 0;" *ngIf="selectedOption == 'dynamic_question'">
+          <div class="d-flex" style="align-items: center;">
+            <input class="pointer" id="active" type="checkbox" [(ngModel)]="questionerDynamicPayload.active"
+              name="active">
+            &nbsp;&nbsp;
+            <label class="pointer" for="active">Active</label>
+          </div>
+        </div>
+        <div class="col-md-12 mt-2" style="padding: 0;" *ngIf="selectedOption == 'custom_template'">
+          <div class="d-flex" style="align-items: center;">
+            <input class="pointer" id="active" type="checkbox" [(ngModel)]="customTemplatePayload.active" name="active">
+            &nbsp;&nbsp;
+            <label class="pointer" for="active">Active</label>
+          </div>
+        </div>
+        <div class="col-md-12 mt-2" style="padding: 0;" *ngIf="selectedOption == 'questioner'">
+          <div class="d-flex" style="align-items: center;">
+            <input class="pointer" id="active" type="checkbox" [(ngModel)]="questionnariePayload.active" name="active">
+            &nbsp;&nbsp;
+            <label class="pointer" for="active">Active</label>
+          </div>
+        </div>
+        <div class="col-md-12 mt-2" style="padding: 0;" *ngIf="selectedOption == 'report'">
+          <div class="d-flex" style="align-items: center;">
+            <input class="pointer" id="active" type="checkbox" [(ngModel)]="reportPayload.active" name="active">
+            &nbsp;&nbsp;
+            <label class="pointer" for="active">Active</label>
+          </div>
+        </div>
+      </div>
+      <i (click)="routeBack()" style="color: #e91e63;
+      font-size: 25px;" class="fa fa-arrow-circle-left pointer" aria-hidden="true"></i>
+    </div>
+
+
+
+    <div class="col-md-12 mt-3">
+      <div class="form-group">
+        <label for="type">Type</label>
+        <ng-select appendTo="body" name="questionType" required placeholder="Select Type" [(ngModel)]="selectedOption"
+          [disabled]="id">
+          <ng-option value="intro">Intro</ng-option>
+          <ng-option value="questioner">Questionarrie</ng-option>
+          <ng-option value="dynamic_question">Questionarrie Dynamic</ng-option>
+          <ng-option value="report">Report</ng-option>
+          <ng-option value="section">Section</ng-option>
+          <ng-option value="custom_template">Custom Template</ng-option>
+        </ng-select>
+
+      </div>
+    </div>
+    <!-- Intro -->
+    <div class="col-md-12" *ngIf="selectedOption == 'intro'">
+      <div class="form-group">
+        <label>Title *</label>
+        <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title" required
+          [(ngModel)]="introPayload.title" #title="ngModel">
+        <small style="color: #e91e63;" *ngIf="(title.touched || myForm.submitted) && title.errors?.['required']">Title
+          is
+          required</small>
+      </div>
+    </div>
+    <div class="col-md-12" *ngIf="selectedOption == 'intro'">
+      <div class="form-group">
+        <label for="exampleInputDescription">Description *</label>
+        <textarea rows="5" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+          required [(ngModel)]="introPayload.description" #description="ngModel"></textarea>
+        <small style="color: #e91e63;"
+          *ngIf="(description.touched || myForm.submitted) && description.errors?.['required']">Description
+          is
+          required</small>
+      </div>
+    </div>
+    <div class="col-md-12" *ngIf="selectedOption == 'intro'">
+      <div class="form-group">
+        <label>Video Link</label>
+        <input type="text" name="link" class="form-control form-control-lg" placeholder="Enter Video Link"
+          [(ngModel)]="introPayload.videolink">
+      </div>
+    </div>
+    <div class="col-md-12 mt-2" *ngIf="selectedOption == 'intro'">
+      <div class="d-flex" style="align-items: center;">
+        <input class="pointer" id="showIntro" type="checkbox" [(ngModel)]="introPayload.icon"
+          [checked]="introPayload.icon" name="introIcon"> &nbsp;&nbsp;
+        <label for="showIntro" class="pointer">Show Intro As Icon</label>
+      </div>
+    </div>
+    <div class="col-md-12 mb-3" *ngIf="selectedOption == 'intro'">
+      <div class="d-flex" style="justify-content: space-evenly;">
+        <div style="margin-top: 39px" *ngIf="!this.id">
+          <button type="submit" class="btn submit-btn" (click)=" addPage('intro',myForm)">
+            Submit
+          </button>
+        </div>
+        <div style="margin-top: 39px" *ngIf="this.id">
+          <button type="submit" class="btn submit-btn" (click)="updatePage('intro',myForm)">
+            Update
+          </button>
+        </div>
+
+        <div>
+          <div style="margin-top: 39px">
+            <button type="submit" class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- questioner -->
+    <div class="col-md-12 " style="padding: 0;" *ngIf="selectedOption == 'questioner'">
+
+      <div class="row mt-2" style="margin: 0;">
+        <div class="col-md-6 ml-3">
+          <div class="d-flex " style="justify-content: space-between;">
+            <div class="d-flex" style="align-items: center;">
+              <input class="pointer" id="hideTitle" type="checkbox" [(ngModel)]="questionnariePayload.hideTitle"
+                name="hideTitle">
+              &nbsp;&nbsp;
+              <label for="hideTitle" class="pointer">Hide Title</label>
+            </div>
+            <div class="d-flex" style="align-items: center;">
+              <input class="pointer" type="checkbox" id="multiCol" [(ngModel)]="questionnariePayload.multiColLayout"
+                name="multiColLayout">
+              &nbsp;&nbsp;
+              <label for="multiCol" class="pointer">Multi Column Layout</label>
+            </div>
+            <div class="d-flex" style="align-items: center;">
+              <input class="pointer" type="checkbox" id="overRideNext"
+                [(ngModel)]="questionnariePayload.overrideNextBtn" name="overrideNextBtn">
+              &nbsp;&nbsp;
+              <label for="overRideNext" class="pointer">Override Next Button</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6"></div>
+      </div>
+      <div class="col-md-12 mt-4" *ngIf="selectedOption == 'questioner'">
+        <div class="form-group">
+          <label>Title *</label>
+          <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title" required
+            [(ngModel)]="questionnariePayload.title" #title="ngModel">
+          <small style="color: #e91e63;" *ngIf="(title.touched || myForm.submitted) && title.errors?.['required']">Title
+            is
+            required</small>
+        </div>
+      </div>
+      <div class="col-md-12 " *ngIf="selectedOption == 'questioner'">
+        <div class="form-group">
+          <label>Description</label>
+          <textarea rows="5" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+            [(ngModel)]="questionnariePayload.description"></textarea>
+
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="selectedOption == 'questioner'">
+        <div class="form-group">
+          <label for="type">Category</label>
+          <ng-select appendTo="body" name="categoryType" placeholder="Select Category"
+            [(ngModel)]="questionnariePayload.categories">
+            <ng-option value="cat" *ngFor="let cat of categories" [value]="cat._id">{{cat.name}}</ng-option>
+          </ng-select>
+
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="selectedOption == 'questioner'">
+        <div class="form-group">
+          <label for="type">Group</label>
+          <ng-select appendTo="body" name="type" placeholder="Select Group" [(ngModel)]="questionnariePayload.group">
+            <ng-option value="GRP" *ngFor="let group of groupsList" [value]="group._id">{{group.name}}</ng-option>
+          </ng-select>
+
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="selectedOption == 'questioner'">
+        <div class="form-group">
+          <label for="type">Tag</label>
+          <ng-select appendTo="body" name="tag" placeholder="Select Tag" [(ngModel)]="questionnariePayload.tag">
+            <ng-option value="multipleChoice">Multi Choice Group</ng-option>
+            <ng-option value="slider">Slider</ng-option>
+            <ng-option value="tableDropDown">Table Drop Down</ng-option>
+            <ng-option value="tableSkill">Table Skill</ng-option>
+            <ng-option value="tableTrait">Table Trait</ng-option>
+            <ng-option value="tableSkillTrait">Table Skill Trait</ng-option>
+             <ng-option value="tableYesNo">Table Yes No</ng-option>
+          </ng-select>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-3" *ngIf="selectedOption == 'questioner'">
+        <div class="d-flex" style="justify-content: space-evenly;">
+          <div style="margin-top: 39px" *ngIf="!this.id">
+            <button type="submit" class="btn submit-btn" (click)="addPage('questioner',myForm)">
+              Submit
+            </button>
+          </div>
+          <div style="margin-top: 39px" *ngIf="this.id">
+            <button type="submit" class="btn submit-btn" (click)="updatePage('questioner',myForm)">
+              Update
+            </button>
+          </div>
+          <div>
+            <div style="margin-top: 39px">
+              <button type="submit" class="btn submit-btn" style="background-color: #73736F !important;"
+                (click)="cancel()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Questionarrie Dynamic -->
+    <ng-container *ngIf="selectedOption == 'dynamic_question'">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Title *</label>
+          <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title"
+            [(ngModel)]="questionerDynamicPayload.title" #title="ngModel" required>
+          <small style="color: #e91e63;" *ngIf="(title.touched || myForm.submitted) && title.errors?.['required']">Title
+            is
+            required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="exampleInputDescription">Description</label>
+          <textarea rows="5" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+            [(ngModel)]="questionerDynamicPayload.description"></textarea>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="type">Group</label>
+          <ng-select appendTo="body" name="type" placeholder="Select Group"
+            [(ngModel)]="questionerDynamicPayload.group">
+            <ng-option value="GRP" *ngFor="let group of groupsList" [value]="group._id">{{group.name}}</ng-option>
+
+          </ng-select>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-3">
+        <div class="d-flex" style="justify-content: space-evenly;">
+          <div style="margin-top: 39px" *ngIf="!this.id">
+            <button type="submit" class="btn submit-btn" (click)="addPage('dynamic_question',myForm)">
+              Submit
+            </button>
+          </div>
+          <div style="margin-top: 39px" *ngIf="this.id">
+            <button type="submit" class="btn submit-btn" (click)="updatePage('dynamic_question',myForm)">
+              Update
+            </button>
+          </div>
+          <div>
+            <div style="margin-top: 39px">
+              <button type="submit" class="btn submit-btn" style="background-color: #73736F !important;"
+                (click)="cancel()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Report -->
+    <div class="col-md-12" *ngIf="selectedOption == 'report'">
+      <div class="form-group">
+        <label for="type">Report Type *</label>
+        <ng-select appendTo="body" (change)="setDescription($event)" name="reportType" required
+          placeholder="Select Type" [(ngModel)]="reportPayload.type" #type="ngModel">
+          <ng-option value="archetype">Archetype</ng-option>
+          <ng-option value="driver">Driver</ng-option>
+          <ng-option value="emotions">Emotions</ng-option>
+          <ng-option value="financialGoals">Financial Goals</ng-option>
+          <ng-option value="naturalGifts">Natural Gifts</ng-option>
+          <ng-option value="simple">Simple</ng-option>
+          <ng-option value="skills">Skills</ng-option>
+          <ng-option value="traits">Traits</ng-option>
+
+        </ng-select>
+        <small style="color: #e91e63;" *ngIf="(type.touched || myForm.submitted) && type.errors?.['required']">Type
+          is
+          required</small>
+
+      </div>
+    </div>
+    <div class="col-md-12" *ngIf="selectedOption == 'report'">
+      <div class="form-group">
+        <label for="exampleInputDescription">Description</label>
+        <textarea name="description" rows="5" class="form-control form-control-lg" placeholder="Enter Description"
+          readonly [(ngModel)]="reportPayload.description"></textarea>
+      </div>
+    </div>
+    <div class="col-md-12 mb-3" *ngIf="selectedOption == 'report'">
+      <div class="d-flex" style="justify-content: space-evenly;">
+        <div style="margin-top: 39px" *ngIf="!this.id">
+          <button type="submit" class="btn submit-btn" (click)="addPage('report',myForm)">
+            Submit
+          </button>
+        </div>
+        <div style="margin-top: 39px" *ngIf="this.id">
+          <button type="submit" class="btn submit-btn" (click)="updatePage('report',myForm)">
+            Update
+          </button>
+        </div>
+
+        <div>
+          <div style="margin-top: 39px">
+            <button type="submit" class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Custom Template -->
+    <div class="col-md-12" *ngIf="selectedOption == 'custom_template'">
+      <div class="form-group">
+        <label  for="type">Template Type *</label>
+        <ng-select appendTo="body" name="templateType" required placeholder="Select Type"
+          [(ngModel)]="customTemplatePayload.name" #tempType="ngModel">
+          <ng-option value="emotions">Emotions</ng-option>
+          <ng-option value="goals">Goals</ng-option>
+          <ng-option value="passion">Passion</ng-option>
+          <ng-option value="profession">Profession</ng-option>
+        </ng-select>
+        <small style="color: #e91e63;"
+          *ngIf="(tempType.touched || myForm.submitted) && tempType.errors?.['required']">Type
+          is
+          required</small>
+
+      </div>
+    </div>
+    <div class="col-md-12 mb-3" *ngIf="selectedOption == 'custom_template'">
+      <div class="d-flex" style="justify-content: space-evenly;">
+        <div style="margin-top: 39px" *ngIf="!this.id">
+          <button type="submit" class="btn submit-btn" (click)="addPage('custom_template',myForm)">
+            Submit
+          </button>
+        </div>
+        <div style="margin-top: 39px" *ngIf="this.id">
+          <button type="submit" class="btn submit-btn" (click)="updatePage('custom_template',myForm)">
+            Update
+          </button>
+        </div>
+
+        <div>
+          <div style="margin-top: 39px">
+            <button type="submit" class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Section -->
+    <div class="col-md-12" *ngIf="selectedOption == 'section'">
+      <div class="form-group">
+        <label>Title *</label>
+        <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title"
+          [(ngModel)]="sectionPayload.title" required #title="ngModel">
+        <small style="color: #e91e63;" *ngIf="(title.touched || myForm.submitted) && title.errors?.['required']">Title
+          is
+          required</small>
+      </div>
+    </div>
+    <div class="col-md-12 mb-3" *ngIf="selectedOption == 'section'">
+      <div class="d-flex" style="justify-content: space-evenly;">
+        <div style="margin-top: 39px" *ngIf="!this.id">
+          <button type="submit" class="btn submit-btn" (click)="addPage('section',myForm)">
+            Submit
+          </button>
+        </div>
+        <div style="margin-top: 39px" *ngIf="this.id">
+          <button type="submit" class="btn submit-btn" (click)="updatePage('section',myForm)">
+            Update
+          </button>
+        </div>
+        <div>
+          <div style="margin-top: 39px">
+            <button type="submit" class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pages , Categories , Groups Icons -->
+  <!-- <div class="icon-outer-container row">
+    <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'">
+      <div class="d-flex" style="justify-content: space-evenly;">
+        <div class="mt-2" (click)="pages()">
+          <i class="fa fa-file ml-2 pointer" [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}"
+            aria-hidden="true" style="font-size: 21px;"></i>
+          <div [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Pages
+          </div>
+        </div>
+        <div class="mt-2" (click)="categoriesRoute()">
+          <i class="fa fa-list-alt ml-4 pointer"
+            [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" aria-hidden="true"
+            style="font-size: 24px;"></i>
+          <div [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">
+            Categories</div>
+        </div>
+        <div class="mt-2" (click)="groups()">
+          <i class='fas fa-code-branch ml-3 pointer'
+            [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 24px;"></i>
+          <div [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Groups
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+</form>
+
+<!-- Categories -->
+<form #myForm="ngForm" (ngSubmit)="myForm.form.valid " style="height: calc(93vh - 13px);
+overflow-y: auto;" *ngIf="this.activeTab === 'categories'">
+  <div class="row" style="margin: 15px;">
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="exampleName">Name *</label>
+        <input type="text" name="name" class="form-control form-control-lg" id="exampleName" placeholder="Enter Name"
+          required [(ngModel)]="category.name" pattern=".*\S+.*" #name="ngModel">
+        <small style="color: #e91e63;" *ngIf="(name.touched || myForm.submitted) && name.errors?.['required']">Name
+          is
+          required</small>
+        <small style="color: #e91e63;" *ngIf="(name.touched || myForm.submitted) && name.hasError('pattern')">Name
+          not
+          valid</small>
+
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="exampleInputDescription">Description</label>
+        <textarea rows="5" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+          [(ngModel)]="category.description"></textarea>
+      </div>
+    </div>
+
+    <div style="margin-top:39px;" class="d-flex w-100" style="justify-content: space-evenly;">
+      <button type="submit" class="btn submit-btn" *ngIf="this.id " (click)=" updateCategories(myForm)">Update</button>
+      <button type="submit" class="btn submit-btn" (click)="addCategories(myForm)" *ngIf="!this.id ">Submit</button>
+      <button class="btn submit-btn" style="background-color: #73736F !important;"
+        (click)="cancelofCategory()">Cancel</button>
+
+    </div>
+  </div>
+
+  <!-- Pages , Categories , Groups Icons -->
+  <!-- <div class="icon-outer-container row">
+    <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'">
+      <div class="d-flex" style="justify-content: space-evenly;">
+        <div class="mt-2" (click)="pages()">
+          <i class="fa fa-file ml-2 pointer" [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}"
+            aria-hidden="true" style="font-size: 21px;"></i>
+          <div [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Pages
+          </div>
+        </div>
+        <div class="mt-2" (click)="categoriesRoute()">
+          <i class="fa fa-list-alt ml-4 pointer"
+            [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" aria-hidden="true"
+            style="font-size: 24px;"></i>
+          <div [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">
+            Categories</div>
+        </div>
+        <div class="mt-2" (click)="groups()">
+          <i class='fas fa-code-branch ml-3 pointer'
+            [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 24px;"></i>
+          <div [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Groups
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+</form>
+
+<!-- Groups -->
+<form #myForm="ngForm" (ngSubmit)="myForm.form.valid " style="height: calc(93vh - 13px);
+overflow-y: auto;" *ngIf="this.activeTab === 'groups'">
+  <div class="row" style="margin: 15px;">
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="exampleName">Name *</label>
+        <input type="text" name="name" class="form-control form-control-lg" id="exampleName" placeholder="Enter Name"
+          required [(ngModel)]="group.name" pattern=".*\S+.*" #name="ngModel">
+        <small style="color: #e91e63;" *ngIf="(name.touched || myForm.submitted) && name.errors?.['required']">Name
+          is
+          required</small>
+        <small style="color: #e91e63;" *ngIf="(name.touched || myForm.submitted) && name.hasError('pattern')">Name
+          not
+          valid</small>
+
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="exampleInputTitle">Title *</label>
+        <input type="text" name="title" class="form-control form-control-lg" placeholder="Enter Title" required
+          [(ngModel)]="group.title" pattern=".*\S+.*" #title="ngModel">
+        <small style="color: #e91e63;" *ngIf="(title.touched || myForm.submitted) && title.errors?.['required']">Title
+          is
+          required</small>
+        <small style="color: #e91e63;" *ngIf="(title.touched || myForm.submitted) && title.hasError('pattern')">Title
+          not
+          valid</small>
+
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="exampleInputDescription">Description</label>
+        <textarea rows="5" name="description" class="form-control form-control-lg" placeholder="Enter Description"
+          [(ngModel)]="group.description"></textarea>
+      </div>
+    </div>
+
+    <div style="margin-top:39px;" class="d-flex w-100" style="justify-content: space-evenly;">
+      <button type="submit" class="btn submit-btn" (click)="updateGroups(myForm)" *ngIf="this.id ">Update</button>
+      <button type="submit" class="btn submit-btn" (click)="addGroup(myForm)" *ngIf="!this.id ">Submit</button>
+      <button class="btn submit-btn" style="background-color: #73736F !important;"
+        (click)="cancelofGroups()">Cancel</button>
+
+    </div>
+  </div>
+
+  <!-- Pages , Categories , Groups Icons -->
+  <!-- <div class="icon-outer-container row">
+    <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'">
+      <div class="d-flex" style="justify-content: space-evenly;">
+        <div class="mt-2" (click)="pages()">
+          <i class="fa fa-file ml-2 pointer" [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}"
+            aria-hidden="true" style="font-size: 21px;"></i>
+          <div [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Pages
+          </div>
+        </div>
+        <div class="mt-2" (click)="categoriesRoute()">
+          <i class="fa fa-list-alt ml-4 pointer"
+            [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" aria-hidden="true"
+            style="font-size: 24px;"></i>
+          <div [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">
+            Categories</div>
+        </div>
+        <div class="mt-2" (click)="groups()">
+          <i class='fas fa-code-branch ml-3 pointer'
+            [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 24px;"></i>
+          <div [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Groups
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+</form>

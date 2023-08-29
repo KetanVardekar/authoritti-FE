@@ -1,0 +1,40 @@
+<div id="print-section">
+<div class="row" style="margin: 0px;">
+  <div class="col-md-12">
+    <div class="d-flex justify-content-center">
+      <img class="authoritti-img" src="../../../../assets/images/report-white.png" style="max-width: 32%;" alt="">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mt-5">
+      <div class="d-flex justify-content-center">
+        <span>
+          {{userData.name}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;{{updatedAt | date}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mt-4">
+      <div class="d-flex justify-content-center">
+        <span style="font-size:25px ;">
+          Driver {{totalValueOfDriverReport}}%
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3" *ngFor="let data of categoryName;let i=index">
+<div  style="padding: 31px;" class="mr-5" >
+<div class="d-flex justify-content-center">{{data}}</div>
+          <div class="d-flex justify-content-center" >{{driverReportCalc[i]}}%</div>
+        </div>
+
+    </div>
+  </div>
+  <div class="footer">Copyright &#169; {{updatedAt | date}} Glory Autotech LLP</div>
+</div>
+<div style="visibility: hidden;">
+  <button id="print" [printTitle]="appTitle" printSectionId="print-section" [useExistingCss]="true" ngxPrint></button>
+</div>

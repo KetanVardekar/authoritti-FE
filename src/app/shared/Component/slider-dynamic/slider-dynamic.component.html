@@ -1,0 +1,19 @@
+<ng-container *ngFor="let data of sliderData.finalAnswer;let i=index" >
+<div class="row mb-4 ques-container">
+
+  <div class="col-md-12" style="padding: 18px;">
+    <span class="index p-1">#{{i + 1}}</span>
+
+
+  <div class="col-md-12 p-0 mt-2" style="padding: 0;">
+    <span>{{data.title}}</span>
+  </div>
+
+    <div class="col-md-12 mt-3" style="padding: 0;">
+      <div class="custom-slider">
+        <ngx-slider id="{{i}}" (valueChange)="formStructure($event,data.title,i)" [(value)]="data.score" [options]="options"></ngx-slider>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-container>

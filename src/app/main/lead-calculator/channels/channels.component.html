@@ -1,0 +1,65 @@
+<div class="row" style="margin: 0px;">
+  <div class="col-md-12">
+
+    <span class="d-flex justify-content-center my-4">
+      <h4>What Channel Will You Use To Generate Leads</h4>
+    </span>
+  </div>
+
+
+  <div class="row my-3" style="text-align: center;">
+    <div class="col-md-4">
+      <span>Social Media</span>
+    </div>
+    <div class="col-md-4">
+      <span>Advertising</span>
+    </div>
+    <div class="col-md-4">
+      <span>Offline</span>
+    </div>
+  </div>
+
+  <div style="max-height: 58vh;overflow-y: auto;">
+    <div class="row my-3" style="text-align: left;">
+      <div class="col-md-4" *ngFor="let item of channelsName;let i = index">
+        <input class="pointer" type="checkbox" [id]="item.id" (change)="multiChoiceCheckbox($event ,item ,i)"
+          [(ngModel)]="item.checked" [checked]="item.checked">
+          <label class="pointer" [for]="item.id">{{item.name}}</label>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<div class="row" style="
+    background-color: #746868;
+    padding: 8px;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;">
+
+  <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'" style="padding: 0">
+    <div class="d-flex" style="justify-content: space-between">
+      <div class="ml-3 mt-1">
+        Page 6/7
+      </div>
+      <div class="d-flex">
+        <div>
+          <button (click)="previousPage()" class="btn submit-btn" style="background-color: #020201 !important">
+            Previous</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <button (click)="nextPage()" class="btn submit-btn" style="background-color: #e91e63 !important">
+            Next
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

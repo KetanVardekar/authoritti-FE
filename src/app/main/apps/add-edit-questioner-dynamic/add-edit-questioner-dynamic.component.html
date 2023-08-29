@@ -1,0 +1,576 @@
+<div class="outer-container">
+  <div class="row" style="margin: 0;">
+    <div class="col-md-12 mt-4">
+      <!-- <div class="d-flex justify-content-center">
+        <h4 *ngIf="!templateId">New Template</h4>
+        <h4 *ngIf="templateId">Edit Template</h4>
+      </div> -->
+      <div style="display: flex;justify-content: end;">
+        <i (click)="routeBack()" style="color: #e91e63;
+      font-size: 25px;" class="fa fa-arrow-circle-left pointer" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin: 15px;">
+    <div class="col-md-12 mt-3">
+      <div class="form-group ">
+        <label for="questionstype">Type</label>
+        <ng-select appendTo="body" name="questionsType" required placeholder="Select Type"
+          [(ngModel)]="selectedDynamicType" [disabled]="templateId">
+          <ng-option value="multipleChoice">Multi Choice Group</ng-option>
+          <ng-option value="slider">Slider</ng-option>
+          <ng-option value="tableDropDown">Table Drop Down</ng-option>
+          <ng-option value="tableSkill">Table Skill</ng-option>
+          <ng-option value="tableSkillTrait">Table Skill Trait</ng-option>
+          <ng-option value="tableTrait">Table Trait</ng-option>
+          <ng-option value="tableYesNo">Table Yes No</ng-option>
+        </ng-select>
+
+      </div>
+    </div>
+
+    <!-- -------Multi Choice Group----- -->
+    <ng-container *ngIf="selectedDynamicType == 'multipleChoice'">
+      <div class="col-md-12 ">
+        <div class="form-group ">
+          <label for="questionstype">Source *</label>
+          <ng-select appendTo="body" name="questionsType" #mcSource="ngModel" required placeholder="Select Source"
+            [(ngModel)]="multipleChoicePayload.source">
+            <ng-option value="tableDropDown">Table Drop Down</ng-option>
+
+          </ng-select>
+          <small style="color: #e91e63;"
+            *ngIf="(mcSource.touched || formSubmiited) && mcSource.errors?.['required']">Source
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Min Answer Limit</label>
+          <input type="number" pattern="\d+" name="minAnswer" class="form-control form-control-lg"  placeholder="Min Answer Limit"
+            [(ngModel)]="multipleChoicePayload.minAnswerCount" #minValue="ngModel" required min="0">
+            <small style="color: #e91e63;" *ngIf="(minValue.touched || formSubmiited)&&minValue.errors?.['pattern']" >Enter Positive Value</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Max Answer Limit</label>
+          <input type="number" pattern="\d+" name="maxAnswer"  min="0" class="form-control form-control-lg"  placeholder="Max Answer Limit"
+            [(ngModel)]="multipleChoicePayload.maxAnswerCount" #maxValue="ngModel"  required min="0">
+            <small style="color: #e91e63;" *ngIf="(maxValue.touched || formSubmiited) && maxValue.errors?.['pattern']" >Enter Positive Value</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+
+        <div class="d-flex  mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <div *ngIf="!this.templateId">
+            <button class="btn submit-btn" (click)="saveMultipleChoice()">
+              Save
+            </button>
+          </div>
+          <div *ngIf="this.templateId">
+            <button class="btn submit-btn" (click)="updateMultipleChoice()">
+              Update
+            </button>
+          </div>
+          <div>
+            <button class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ----------------Slider--------- -->
+    <ng-container *ngIf="selectedDynamicType == 'slider'">
+      <div class="col-md-12 ">
+        <div class="form-group ">
+          <label for="questionstype">Source *</label>
+          <ng-select appendTo="body" name="questionsType" #sliderSource="ngModel" required placeholder="Select Source"
+            [(ngModel)]="dynamicSliderPayload.source">
+            <ng-option value="multiChoice">Multi Choice</ng-option>
+
+          </ng-select>
+          <small style="color: #e91e63;"
+            *ngIf="(sliderSource.touched || formSubmiited) && sliderSource.errors?.['required']">Source
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Filter On</label>
+          <input type="number" pattern="\d+" name="minAnswer" class="form-control form-control-lg"
+            placeholder="Enter Filter Value e.g.3" min="0" [(ngModel)]="dynamicSliderPayload.filterOn" #filterOn="ngModel" required>
+            <small style="color: #e91e63;" *ngIf="(filterOn.touched || formSubmiited)&&filterOn.errors?.['pattern']" >Enter Positive Value</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Minimum Value *</label>
+          <input type="number" pattern="\d+" name="minValue"  class="form-control form-control-lg" placeholder="Min Value"
+            [(ngModel)]="dynamicSliderPayload.minVal" min="0" #sliderMinValue="ngModel" required>
+          <small style="color: #e91e63;"
+            *ngIf="(sliderMinValue.touched || formSubmiited) && sliderMinValue.errors?.['required']">Minimum Value
+            is required</small>
+            <small style="color: #e91e63;"
+            *ngIf="(sliderMinValue.touched || formSubmiited) && sliderMinValue.errors?.['pattern']">Enter Positve Value</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Maximum Value *</label>
+          <input type="number" pattern="\d+" name="maxValue" class="form-control form-control-lg" placeholder="Max Value"
+            [(ngModel)]="dynamicSliderPayload.maxVal" min="0" #sliderMaxValue="ngModel" required>
+          <small style="color: #e91e63;"
+            *ngIf="(sliderMaxValue.touched || formSubmiited) && sliderMaxValue.errors?.['required']">Maximum Value
+            is required</small>
+            <small style="color: #e91e63;"
+            *ngIf="(sliderMaxValue.touched || formSubmiited) && sliderMaxValue.errors?.['pattern']">Enter Positve Value</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Default Answer *</label>
+          <input type="number" pattern="\d+" name="deAnswer" class="form-control form-control-lg" placeholder="Default Answer"
+            [(ngModel)]="dynamicSliderPayload.defaultAnswer" min="0" #deAns="ngModel" required>
+          <small style="color: #e91e63;" *ngIf="(deAns.touched || formSubmiited) && deAns.errors?.['required']">Default
+            Answer
+            is required</small>
+            <small style="color: #e91e63;" *ngIf="(deAns.touched || formSubmiited) && deAns.errors?.['pattern']" >Enter Positve Value</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Minimum Value Label</label>
+          <input type="text" name="minValueLabel" class="form-control form-control-lg" placeholder="Minimum Value Label"
+            [(ngModel)]="dynamicSliderPayload.minValLabel" required>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="exampleInputDescription">Maximum Value Label</label>
+          <input type="text" name="maxValueLabel" class="form-control form-control-lg" placeholder="Maximum Value Label"
+            [(ngModel)]="dynamicSliderPayload.maxValLabel" required>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Tag</label>
+          <input type="text" name="tag" class="form-control form-control-lg" placeholder="Type and Press Enter"
+            [(ngModel)]="tagList" (keyup.enter)="addTag(tagList);$event.stopPropagation()" required>
+        </div>
+      </div>
+      <div class="container">
+        <span class="badge" *ngFor="let tag of dynamicSliderPayload.tag ;let i=index">
+          <span>{{tag}}</span>
+          <span (click)="deleteTag(i)" class="p-2 pointer"><i class="fa fa-times" style="color:black"
+              aria-hidden="true"></i></span>
+
+        </span>
+
+      </div>
+
+      <div class="col-md-12">
+
+        <div class="d-flex mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <div *ngIf="!this.templateId">
+            <button class="btn submit-btn" (click)="saveDynamicSlider()">
+              Save
+            </button>
+          </div>
+          <div *ngIf="this.templateId">
+            <button class="btn submit-btn" (click)="updateSlider()">
+              Update
+            </button>
+          </div>
+          <div>
+            <button class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- --------------Table Drop Down--------- -->
+    <ng-container *ngIf="selectedDynamicType == 'tableDropDown'">
+      <div class="col-md-12 ">
+        <div class="form-group ">
+          <label for="questionstype">Source *</label>
+          <ng-select appendTo="body" name="source" #tableDdSource="ngModel" required placeholder="Select Source"
+            [(ngModel)]="tableDropDownPayload.source">
+            <ng-option value="slider">Slider</ng-option>
+            <ng-option value="multiChoiceGroup">Multi Choice</ng-option>
+
+          </ng-select>
+          <small style="color: #e91e63;"
+            *ngIf="(tableDdSource.touched || formSubmiited) && tableDdSource.errors?.['required']">Source
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Column 1 Title *</label>
+          <input type="text" name="col1" class="form-control form-control-lg" placeholder="Column 1 Title"
+            [(ngModel)]="tableDropDownPayload.colOneTitle" #tableDdcol1="ngModel" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableDdcol1.touched || formSubmiited) && tableDdcol1.errors?.['required']">Column One
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Column 2 Title *</label>
+          <input type="text" name="col2" class="form-control form-control-lg" placeholder="Column 2 Title"
+            [(ngModel)]="tableDropDownPayload.colTwoTitle" #tableDdcol2="ngModel" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableDdcol2.touched || formSubmiited) && tableDdcol2.errors?.['required']">Column Two
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Column 3 Title *</label>
+          <input type="text" name="col3" class="form-control form-control-lg" placeholder="Column 3 Title"
+            #tableDdcol3="ngModel" [(ngModel)]="tableDropDownPayload.colThreeTitle" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableDdcol3.touched || formSubmiited) && tableDdcol3.errors?.['required']">Column Three
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Options</label>
+          <input type="text" name="options" class="form-control form-control-lg" placeholder="Type and Press Enter"
+            [(ngModel)]="tableDropDownList"
+            (keyup.enter)="addTableDropDownOption(tableDropDownList);$event.stopPropagation()" required>
+        </div>
+      </div>
+      <div class="container">
+        <span class="badge" *ngFor="let tableDropDownOption of tableDropDownPayload.options;let i=index">
+          <span>{{tableDropDownOption}}</span>
+          <span (click)="deleteTableDropDownOption(i)" class="p-2 pointer"><i class="fa fa-times" style="color:black"
+              aria-hidden="true"></i></span>
+
+        </span>
+
+      </div>
+
+      <div class="col-md-12">
+
+        <div class="d-flex  mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <div *ngIf="!this.templateId">
+            <button class="btn submit-btn" (click)="saveTableDropDown()">
+              Save
+            </button>
+          </div>
+          <div *ngIf="this.templateId">
+            <button class="btn submit-btn" (click)="updateTableDropDown()">
+              Update
+            </button>
+          </div>
+          <div>
+            <button class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ---------------------Table Skill------------- -->
+    <ng-container *ngIf="selectedDynamicType == 'tableSkill'">
+      <div class="col-md-12 ">
+        <div class="form-group ">
+          <label for="questionstype">Source *</label>
+          <ng-select appendTo="body" name="source" #tableSkillSource="ngModel" required placeholder="Select Source"
+            [(ngModel)]="tableSkillPayload.source">
+            <ng-option value="slider">Slider</ng-option>
+
+
+          </ng-select>
+          <small style="color: #e91e63;"
+            *ngIf="(tableSkillSource.touched || formSubmiited) && tableSkillSource.errors?.['required']">Source
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Data Id *</label>
+          <input type="text" name="dataId" class="form-control form-control-lg" placeholder="Data Id"
+            #tableSkilldataId="ngModel" [(ngModel)]="tableSkillPayload.dataId" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableSkilldataId.touched || formSubmiited) && tableSkilldataId.errors?.['required']">Data ID
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Column 1 Title *</label>
+          <input type="text" name="col1" class="form-control form-control-lg" #tableSkillcol1="ngModel"
+            placeholder="Column 1 Title" [(ngModel)]="tableSkillPayload.colOneTitle" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableSkillcol1.touched || formSubmiited) && tableSkillcol1.errors?.['required']">Column One
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Column 2 Title *</label>
+          <input type="text" name="col2" class="form-control form-control-lg" placeholder="Column 2 Title"
+            #tableSkillcol2="ngModel" [(ngModel)]="tableSkillPayload.colTwoTitle" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableSkillcol2.touched || formSubmiited) && tableSkillcol2.errors?.['required']">Column Two
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Column 3 Title *</label>
+          <input type="text" name="col3" class="form-control form-control-lg" placeholder="Column 3 Title"
+            #tableSkillcol3="ngModel" [(ngModel)]="tableSkillPayload.colThreeTitle" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableSkillcol3.touched || formSubmiited) && tableSkillcol3.errors?.['required']">Column Three
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Column 4 Title *</label>
+          <input type="text" name="col3" class="form-control form-control-lg" placeholder="Column 4 Title"
+            #tableSkillcol4="ngModel" [(ngModel)]="tableSkillPayload.colFourTitle" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableSkillcol4.touched || formSubmiited) && tableSkillcol4.errors?.['required']">Column Four
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Column 5 Title *</label>
+          <input type="text" name="col3" class="form-control form-control-lg" placeholder="Column 5 Title"
+            #tableSkillcol5="ngModel" [(ngModel)]="tableSkillPayload.colFiveTitle" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableSkillcol5.touched || formSubmiited) && tableSkillcol5.errors?.['required']">Column Five
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Options</label>
+          <input type="text" name="options" class="form-control form-control-lg" placeholder="Type and Press Enter"
+            [(ngModel)]="tableSkillList" (keyup.enter)="addTableSkillOption(tableSkillList);$event.stopPropagation()"
+            required>
+        </div>
+      </div>
+      <div class="container">
+        <span class="badge" *ngFor="let tableSkill of tableSkillPayload.options;let i=index">
+          <span>{{tableSkill}}</span>
+          <span (click)="deleteTableSkillOption(i)" class="p-2 pointer"><i class="fa fa-times" style="color:black"
+              aria-hidden="true"></i></span>
+
+        </span>
+
+      </div>
+      <div class="col-md-12">
+
+        <div class="d-flex mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <div *ngIf="!this.templateId">
+            <button class="btn submit-btn" (click)="saveTableSkill()">
+              Save
+            </button>
+          </div>
+          <div *ngIf="this.templateId">
+            <button class="btn submit-btn" (click)=" updateTableSkill()">
+              Update
+            </button>
+          </div>
+          <div>
+            <button class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ----------------------Table Skill Trait----------- -->
+    <ng-container *ngIf="selectedDynamicType == 'tableSkillTrait'">
+      <div class="col-md-12 ">
+        <div class="form-group ">
+          <label for="questionstype">Source *</label>
+          <ng-select appendTo="body" name="source" required placeholder="Select Source" #tableSkillTraitSource="ngModel"
+            [(ngModel)]="tableSkillTraitPayload.source">
+            <ng-option value="skillsAndTraits">Skills & Traits</ng-option>
+
+
+          </ng-select>
+          <small style="color: #e91e63;"
+            *ngIf="(tableSkillTraitSource.touched || formSubmiited) && tableSkillTraitSource.errors?.['required']">Source
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Data Id *</label>
+          <input type="text" name="dataId" class="form-control form-control-lg" placeholder="Data Id"
+            #tableSkillTraitDataId="ngModel" [(ngModel)]="tableSkillTraitPayload.dataId" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableSkillTraitDataId.touched || formSubmiited) && tableSkillTraitDataId.errors?.['required']">Data
+            ID
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Filter On</label>
+          <input type="text" name="minAnswer" class="form-control form-control-lg"
+            placeholder="Enter Filter Value e.g.3" [(ngModel)]="tableSkillTraitPayload.filterOn" required>
+        </div>
+      </div>
+      <div class="col-md-12">
+
+        <div class="d-flex  mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <div *ngIf="!this.templateId">
+            <button class="btn submit-btn" (click)="saveTableSkillTrait()">
+              Save
+            </button>
+          </div>
+          <div *ngIf="this.templateId">
+            <button class="btn submit-btn" (click)="updateTableSkillTrait()">
+              Update
+            </button>
+          </div>
+          <div>
+            <button class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- -------------------------Table Trait-------------- -->
+    <ng-container *ngIf="selectedDynamicType == 'tableTrait'">
+      <div class="col-md-12 mt-3">
+        <div class="form-group ">
+          <label for="questionstype">Source *</label>
+          <ng-select appendTo="body" name="source" #tableTraitSource="ngModel" required placeholder="Select Source"
+            [(ngModel)]="tableTraitPayload.source">
+            <ng-option value="slider">Slider</ng-option>
+          </ng-select>
+          <small style="color: #e91e63;"
+            *ngIf="(tableTraitSource.touched || formSubmiited) && tableTraitSource.errors?.['required']">Source
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Data Id*</label>
+          <input type="text" name="dataId" class="form-control form-control-lg" placeholder="Data Id"
+            #tableTraitdataId="ngModel" [(ngModel)]="tableTraitPayload.dataId" required>
+          <small style="color: #e91e63;"
+            *ngIf="(tableTraitdataId.touched || formSubmiited) && tableTraitdataId.errors?.['required']">Data ID
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Columns</label>
+          <input type="text" name="columns" class="form-control form-control-lg" placeholder="Type and Press Enter"
+            [(ngModel)]="tableTraitColumnList" (keyup.enter)="addColumns(tableTraitColumnList);$event.stopPropagation()"
+            required>
+        </div>
+      </div>
+      <div class="container">
+        <span class="badge" *ngFor="let columns of tableTraitPayload.columns;let i=index">
+          <span>{{columns}}</span>
+          <span (click)="deleteColumns(i)" class="p-2 pointer"><i class="fa fa-times" style="color:black"
+              aria-hidden="true"></i></span>
+
+        </span>
+
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>Value</label>
+          <input type="text" name="value" class="form-control form-control-lg" placeholder="Type and Press Enter"
+            [(ngModel)]="tableTraitValuesList" (keyup.enter)="addValues(tableTraitValuesList);$event.stopPropagation()"
+            required>
+        </div>
+      </div>
+      <div class="container">
+        <span class="badge" *ngFor="let values of tableTraitPayload.values;let i=index">
+          <span>{{values}}</span>
+          <span (click)="deleteValues(i)" class="p-2 pointer"><i class="fa fa-times" style="color:black"
+              aria-hidden="true"></i></span>
+
+        </span>
+
+      </div>
+      <div class="col-md-12">
+
+        <div class="d-flex  mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <div *ngIf="!this.templateId">
+            <button class="btn submit-btn" (click)="saveTableTrait()">
+              Save
+            </button>
+          </div>
+          <div *ngIf="this.templateId">
+            <button class="btn submit-btn" (click)="updateTableTrait()">
+              Update
+            </button>
+          </div>
+          <div>
+            <button class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ----------------------Table Yes No----------------- -->
+    <ng-container *ngIf="selectedDynamicType == 'tableYesNo'">
+      <div class="col-md-12 ">
+        <div class="form-group ">
+          <label for="questionstype">Source *</label>
+          <ng-select appendTo="body" name="slider" required placeholder="Select Source" #tableYesNoSource="ngModel"
+            [(ngModel)]="tableYesNoPayload.source">
+            <ng-option value="slider">Slider</ng-option>
+          </ng-select>
+          <small style="color: #e91e63;"
+            *ngIf="(tableYesNoSource.touched || formSubmiited) && tableYesNoSource.errors?.['required']">Source
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>1st Column Title *</label>
+          <input type="text" name="col1" class="form-control form-control-lg" placeholder="Column 1 Title"
+            [(ngModel)]="tableYesNoPayload.firstColumnTitle" required #col1Title="ngModel">
+            <small style="color: #e91e63;"
+            *ngIf="(col1Title.touched || formSubmiited) && col1Title.errors?.['required']">1st Column Title
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label>2nd Column Title *</label>
+          <input type="text" name="col2" class="form-control form-control-lg" placeholder="Column 2 Title"
+            [(ngModel)]="tableYesNoPayload.secondColumnTitle" #col2Title="ngModel" required>
+            <small style="color: #e91e63;"
+            *ngIf="(col2Title.touched || formSubmiited) && col2Title.errors?.['required']">2nd Column Title
+            is required</small>
+        </div>
+      </div>
+      <div class="col-md-12">
+
+        <div class="d-flex  mb-3" style="margin-top: 39px;justify-content: space-evenly;">
+          <div *ngIf="!this.templateId">
+            <button class="btn submit-btn" (click)="saveTableYesNo()">
+              Save
+            </button>
+          </div>
+          <div *ngIf="this.templateId">
+            <button class="btn submit-btn" (click)="updateTableYesNo()">
+              Update
+            </button>
+          </div>
+          <div>
+            <button class="btn submit-btn" style="background-color: #73736F !important;"
+              (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div *ngIf="!data?.hideTitle" class="title-section">
+  <ng-container *ngIf="data.professionTemplate">
+    <div *ngIf="data.templateTitle">
+      <span style="color: #e91e63;font-size: 27px;">{{data.templateTitle}}</span>
+    </div>
+
+    <div class="title">
+      {{data.title}}
+    </div>
+    <div class="desc">
+      {{data.description}}
+    </div>
+  </ng-container>
+  <ng-container *ngIf="data.passionTemplate">
+    <div>
+      <span style="color: white;font-size: 27px;">{{data.passionTitle}}</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!data.passionTemplate && !data.professionTemplate">
+    <div class="title">
+      {{data.title}}
+    </div>
+    <div class="desc">
+      {{data.description}}
+    </div>
+  </ng-container>
+</div>
+<ng-container *ngIf="!multiCol">
+  <ng-container *ngIf="questionList && questionList.length">
+    <ng-container *ngFor="let question of questionList;let i = index">
+      <ng-container *ngIf="question?.id?.question?.multipleChoice">
+        <app-multi-choice [viewMode]="viewMode" [data]="question.id.question.multipleChoice" [index]="i">
+        </app-multi-choice>
+      </ng-container>
+      <ng-container *ngIf="question?.id?.question?.multiTextInput">
+        <app-multi-text-input [viewMode]="viewMode" [data]="question.id.question.multiTextInput" [index]="i">
+        </app-multi-text-input>
+      </ng-container>
+      <ng-container *ngIf="question?.id?.question?.singleChoice">
+        <app-single-choice [viewMode]="viewMode" [data]="question.id.question.singleChoice" [index]="i">
+        </app-single-choice>
+      </ng-container>
+      <ng-container *ngIf="question?.id?.question?.slider ">
+        <app-slider [viewMode]="viewMode" [data]="question.id.question.slider" [index]="i"></app-slider>
+      </ng-container>
+      <ng-container *ngIf="question?.id?.question?.textArea">
+        <app-text-area [viewMode]="viewMode" [data]="question.id.question.textArea" [index]="i"></app-text-area>
+      </ng-container>
+      <ng-container *ngIf="question?.id?.question?.textInput">
+        <app-text-input [viewMode]="viewMode" [data]="question.id.question.textInput" [index]="i"></app-text-input>
+      </ng-container>
+
+    </ng-container>
+
+  </ng-container>
+  <ng-container *ngIf="questionList.length == 0">
+    <div class="row" style="margin: 0px;">
+      <div class="col-md-12">
+        <div class="container">
+          <div class="content-center">
+            <span style="color: white;" class="d-flex justify-content-center">
+              No Questions Available
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</ng-container>
+<!-- -----Only Slider------- -->
+<ng-container *ngIf="multiCol">
+  <div class="row m-0">
+    <ng-container *ngFor="let question of questionList;let i = index">
+      <ng-container *ngIf="question?.id?.question?.slider ">
+        <div class="col-md-6">
+          <app-slider [viewMode]="viewMode" [data]="question.id.question.slider" [index]="i"></app-slider>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>

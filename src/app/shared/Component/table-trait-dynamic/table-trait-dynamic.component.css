@@ -1,0 +1,16 @@
+.table>thead {
+
+  background-color: #EF5EA7 !important;
+
+}
+.first-col{
+  background-color: #EF5EA7 !important;
+}
+.second-col{
+  background-color: #737373 !important;
+}
+input[type="radio"] {
+  -webkit-appearance: checkbox !important; /* Chrome, Safari, Opera */
+  -moz-appearance: checkbox !important;    /* Firefox */
+  -ms-appearance: checkbox !important;     /* not currently supported */
+}

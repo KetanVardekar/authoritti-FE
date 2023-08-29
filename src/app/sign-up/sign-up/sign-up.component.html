@@ -1,0 +1,55 @@
+<div class="loginMain">
+  <div style="width: 50%;">
+    <div class="logo">
+      <img style="width: 70%;" src="../../../assets/images/report-white.png" alt="">
+    </div>
+
+    <div class="user-heading">
+      <span>Sign Up</span>
+    </div>
+
+    <div class="user-body">
+      <form style="width: 50%;"  #myForm="ngForm"  (ngSubmit)="myForm.form.valid && signUp()">
+        <div class="d-block">
+          <div class="form-group">
+            <label for="exampleInputName1">Name</label>
+            <input type="text" class="form-control form-control-lg" id="exampleInputName1" aria-describedby="nameHelp"
+              placeholder="Enter Name" name="name" [(ngModel)]="signUpPayload.name" #name="ngModel" required >
+              <small style="color: #e91e63;" *ngIf="(name.touched || myForm.submitted) && name.errors?.['required']">Name is required</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control form-control-lg" id="exampleInputEmail1"
+              aria-describedby="emailHelp" placeholder="Enter Email" name="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="signUpPayload.email" #email="ngModel" required >
+              <small style="color: #e91e63;" *ngIf="(email.touched || myForm.submitted) && email.errors?.['required']">Email is required</small>
+              <small style="color: #e91e63;" *ngIf="(email.touched || myForm.submitted) && email.errors?.['pattern']">This is not a valid Email</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input  class="form-control form-control-lg" id="exampleInputPassword1" name="password"
+              placeholder="Password" [(ngModel)]="signUpPayload.password" #password="ngModel" required   [type]="showPasswordNew ? 'text' : 'password'">
+              <small style="color: #e91e63;" *ngIf="(password.touched ||  myForm.submitted) && password.errors?.['required']">Password is required</small>
+              <span (click)="showHidePasswordNew()" >
+              <i   *ngIf="showPasswordNew" class="far fa-eye field-icon" id="togglePassword"></i>
+              <i  *ngIf="!showPasswordNew" class="far fa-eye-slash field-icon"></i></span>
+
+          </div>
+        </div>
+
+        <div class="user-footer">
+
+          <div style="display: flex;justify-content: center;margin-top: 20px;">
+            <button type="submit" class="btn submit-btn">Sign Up</button>
+          </div>
+
+          <div style="display: flex;justify-content: center;margin-top: 20px;">
+            <span (click)="login()" style="cursor: pointer;" class="login" ><a>Already have an Account? Login</a></span>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>

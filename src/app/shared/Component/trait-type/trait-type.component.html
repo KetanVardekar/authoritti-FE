@@ -1,0 +1,70 @@
+<div id="print-section">
+  <div class="row" style="margin: 0px;">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center">
+        <img class="authoritti-img" src="../../../../assets/images/report-white.png" style="max-width: 32%;" alt="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-5">
+        <div class="d-flex justify-content-center">
+          <span>
+            {{userData.name}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;{{updatedAt | date}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-md-12 mt-4">
+        <div class="d-flex justify-content-center">
+          <span style="font-size:25px ;">
+            Trait Report
+          </span>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngFor="let list of $any(category) | keyvalue;let i =index ">
+      <div class="row header mt-4">
+
+        <div class="col-md-12">
+          <div class="d-flex justify-content-center">
+            <span>{{list.key}} Traits {{traitCalcinPercentage[$any(list.key)]}}% </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- -----------------Slider----------- -->
+      <div class="row mt-4">
+        <ng-container *ngFor="let data of $any(list).value | keyvalue">
+          <ng-container *ngIf="$any(data.value).length">
+            <div class="col-md-12 my-5">
+              <span>Group: {{data.key}} Traits</span>
+            </div>
+          </ng-container>
+          <ng-container *ngFor="let val of $any(data.value)">
+
+            <div class="col-md-3 pt-2 pb-2">
+
+              <span style="color: white;">{{$any(val).title}}
+                = <span>{{$any(val)?.finalAnswer?.value}}</span></span>
+
+            </div>
+
+          </ng-container>
+        </ng-container>
+      </div>
+
+
+    </ng-container>
+    <!-- <div class="row">
+    <div class="col-md-12 mt-4">
+      <div>Category: <span>GRP1 Traits</span></div>
+    </div>
+  </div> -->
+    <div class="footer">Copyright &#169; {{updatedAt | date}} Glory Autotech LLP</div>
+  </div>
+  <div style="visibility: hidden;">
+    <button id="print" [printTitle]="appTitle" printSectionId="print-section" [useExistingCss]="true" ngxPrint></button>
+  </div>
+</div>

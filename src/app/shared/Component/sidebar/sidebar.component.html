@@ -1,0 +1,82 @@
+<div class="sidebar-slider" style="height: calc(93vh - 10px);
+overflow-y: auto;" [class.sidebar-slide-in]="sidebarShow">
+  <div class="sidebar-content" *ngIf="userData.admin">
+    <div class="set-sidebar-text" (click)="navigate('home')" [ngClass]="{ 'active-tab': activeTab == 'home' }">
+      <span class="d-flex">
+        <span style="padding: 15px;">
+          <i class="fa fa-home home-icon" aria-hidden="true" style="font-size: 24px;"></i>
+        </span>
+        <span style="padding: 15px;">Home</span>
+      </span>
+    </div>
+    <div class="set-sidebar-text" (click)="navigate('users')" [ngClass]="{ 'active-tab': activeTab == 'users' }">
+      <span class="d-flex">
+        <span style="padding: 15px;">
+          <i class="fas fa-user-friends" aria-hidden="true" style="font-size: 24px;"></i>
+        </span>
+        <span style="padding: 15px;">Users</span>
+      </span>
+    </div>
+    <div class="set-sidebar-text" (click)="navigate('apps')" [ngClass]="{ 'active-tab': activeTab == 'apps' }">
+      <span class="d-flex">
+        <span style="padding: 15px;">
+          <i class="fas fa-cube" aria-hidden="true" style="font-size: 24px;"></i>
+        </span>
+        <span style="padding: 15px;">Apps</span>
+      </span>
+    </div>
+
+    <div class="d-flex mt-5" style="justify-content: center;">
+      <button type="button" class="btn btn-logout" (click)="logOut()">Logout</button>
+    </div>
+  </div>
+
+  <div class="sidebar-content" *ngIf="!userData.admin">
+    <div class="profile">
+      <img style="max-width: 50%;" src="../../../../assets/images/profile-white.png" alt="">
+    </div>
+    <span style="text-align: center;" class="mt-2 mb-4">{{userData.name}}</span>
+    <div class="set-sidebar-text" (click)="navigate('home')" [ngClass]="{ 'active-tab': activeTab == 'home' }">
+      <span class="d-flex">
+        <span style="padding: 15px;">
+          <i class="fa fa-home home-icon" aria-hidden="true" style="font-size: 24px;"></i>
+        </span>
+        <span style="padding: 15px;">Home</span>
+      </span>
+    </div>
+
+    <div class="set-sidebar-text" (click)="navigate('leadCalculator')" [ngClass]="{ 'active-tab': activeTab == 'leadCalculator' }">
+      <span class="d-flex">
+        <span style="padding: 15px;">
+          <!-- <i class="fa fas-usd" aria-hidden="true" style="font-size: 24px;"></i> -->
+          <i class="fas fa-dollar-sign" aria-hidden="true" style="font-size: 24px;"></i>
+        </span>
+        <span style="padding: 15px;">Lead Calculator</span>
+      </span>
+    </div>
+
+    <div class="set-sidebar-text" *ngFor="let app of appsList" (click)="navigate(app.name,app._id,app)"
+      [ngClass]="{ 'active-tab': activeTab == app._id }">
+      <span class="d-flex">
+        <span style="padding: 15px;">
+          <i [class]="app.icon" aria-hidden="true" style="font-size: 24px;"></i>
+        </span>
+        <span style="padding: 15px;">{{app.title}}</span>
+      </span>
+    </div>
+
+    <div class="d-flex mt-5" style="justify-content: center;">
+      <button type="button" class="btn btn-logout" (click)="logOut()">Logout</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- <button class="sidebar-open btnsidebar" (click)="sidebarShow = !sidebarShow">
+  Open Sidebar
+</button> -->

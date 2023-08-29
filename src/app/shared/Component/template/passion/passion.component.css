@@ -1,0 +1,11 @@
+.header{
+  margin-top: 63px;
+    margin-left: 0;
+    margin-right: 0;
+}
+.border-down{
+  border-bottom: 1px solid black;
+}
+.no-border{
+border: none;
+}

@@ -1,0 +1,29 @@
+<div class="row mt-4">
+  <div class="col-md-12">
+    <h5 class="d-flex justify-content-center">{{appTitle}}</h5>
+  </div>
+</div>
+<div class="row mt-2">
+  <div class="col-md-12">
+    <div class="form-group" style="padding:5px 30px 26px 30px;margin: 0px;">
+      <label>Enter Unique Name</label>
+      <input type="text" name="unique" class="form-control form-control-lg" placeholder="Enter Unique Name"
+        [(ngModel)]="uniqueName" required (keydown.enter)='submit()' >
+
+    </div>
+  </div>
+</div>
+<div class="row mb-4">
+  <div class="col-md-12">
+    <div class="d-flex" style="justify-content: space-around;
+  ">
+      <div (click)="close()"><button class="btn submit-btn" style="background-color: #73736F !important;">
+          Cancel
+        </button></div>
+      <div (click)="submit()"><button type="submit" class="btn submit-btn"
+          style="background-color: #73736F !important;">
+          OK
+        </button></div>
+    </div>
+  </div>
+</div>

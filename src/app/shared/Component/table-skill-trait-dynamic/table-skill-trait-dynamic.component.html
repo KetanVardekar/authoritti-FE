@@ -1,0 +1,72 @@
+ <!-- Skills -->
+<div class="row m-0">
+  <div class="col-md-12">
+    <table class="table mt-5 " style="color: white; border-left: 3px solid black;">
+      <thead style="text-align: center;">
+
+        <tr>
+          <th scope="col">Skills</th>
+          <th scope="col">Average Score</th>
+          <th scope="col">Use</th>
+          <th scope="col">Top 10</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody style="text-align: center;">
+
+        <tr *ngFor="let data of tableSkillData;let i=index">
+
+          <td class="custom-col">{{data.skillName}}</td>
+          <td class="custom-col" >{{data.avgScore}}</td>
+          <td class="custom-col" >{{data.colName}}</td>
+
+          <td class="custom-col" ><input class="pointer" type="checkbox" [checked]="data.checked"  name="radiogroup-{{i}}"  (change)="topTenSkill($event,data,i)"></td>
+
+
+        </tr>
+
+    </tbody>
+
+    </table>
+  </div>
+</div>
+
+<!-- Traits -->
+
+<div class="row m-0">
+  <div class="col-md-12">
+    <table class="table mt-5 " style="color: white; border-left: 3px solid black;">
+      <thead style="text-align: center;">
+
+        <tr>
+          <th scope="col">Traits</th>
+          <th scope="col">Average Score</th>
+          <th scope="col">Use</th>
+          <th scope="col">Dominant</th>
+          <th scope="col">Top 10</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody style="text-align: center;">
+
+        <tr *ngFor="let data of tableSkillTraitData;let i=index">
+
+          <td class="custom-col">{{data.skillName}}</td>
+          <td class="custom-col" >{{data.avgScore}}</td>
+          <td class="custom-col" >{{data.colName}}</td>
+          <td class="custom-col" >{{data.dominant}}</td>
+
+          <td class="custom-col" ><input class="pointer" type="checkbox" [checked]="data.checked"  (change)="topTenTraits($event,data,i)" name="checkbox-{{i}}"></td>
+
+
+        </tr>
+
+    </tbody>
+
+    </table>
+  </div>
+</div>

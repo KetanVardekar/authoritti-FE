@@ -1,0 +1,79 @@
+<div class="row" style="margin: 0px;">
+  <div class="col-md-12">
+
+    <span class="d-flex justify-content-center my-4">
+      <h4>What Is Your Sales Conversion Ratio Per Each Product/Service</h4>
+    </span>
+  </div>
+
+
+  <div class="row my-3" style="text-align: center;">
+    <div class="col-md-4">
+      <span>Product / Service</span>
+    </div>
+    <div class="col-md-4">
+      <span>Sales Required In Units</span>
+    </div>
+    <div class="col-md-4">
+      <span>Choose Close Rate</span>
+    </div>
+  </div>
+
+
+
+  <div style="max-height: 49vh;overflow-y: auto;">
+  <div class="row my-3" *ngFor="let item of this.appObj['averageSaleRequired'];let i = index"
+    style="text-align: center;align-items: center;">
+    <div class="col-md-4">
+      <span>{{item.product}}</span>
+    </div>
+    <div class="col-md-4">
+      <span>$ {{item.salesRequiredInUnits | number}}</span>
+    </div>
+    <div class="col-md-4 d-flex" style="justify-content: center;">
+      <ng-select style="width: 50%;" [searchable]="false" [clearable]="false" appendTo="body" id="rate-{{i}}"
+        placeholder="Select Rate" name="rate-{{i}}" (change)="isValid()" [(ngModel)]="item.closeRate">
+        <ng-option [value]="2">50 % (1 in 2 sales)</ng-option>
+        <ng-option [value]="4">25 % (1 in 4 sales)</ng-option>
+        <ng-option [value]="10">10 % (1 in 10 sales)</ng-option>
+      </ng-select>
+    </div>
+  </div>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+<div class="row" style="
+    background-color: #746868;
+    padding: 8px;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;">
+
+  <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'" style="padding: 0">
+    <div class="d-flex" style="justify-content: space-between">
+      <div class="ml-3 mt-1">
+        Page 4/7
+      </div>
+      <div class="d-flex">
+        <div>
+          <button (click)="previousPage()" class="btn submit-btn" style="background-color: #020201 !important">
+            Previous</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <button (click)="nextPage()" [disabled]="!valid" class="btn submit-btn" style="background-color: #e91e63 !important">
+            Next
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

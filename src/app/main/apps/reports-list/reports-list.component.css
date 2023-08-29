@@ -1,0 +1,26 @@
+.card-body{
+  background-color: #303030;
+}
+.card{
+  box-shadow: 1px 1px 1px 1px;
+}
+.email{
+  color: grey;
+  margin-bottom: 10px;
+}
+.icon-color{
+  color:#e91e63 ;
+  cursor: pointer;
+}
+.content-center{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-54%);
+}
+.container{
+  position: relative;
+  height: 580px;
+  display: flex;
+  justify-content: center;
+}

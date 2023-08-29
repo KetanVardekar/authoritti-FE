@@ -1,0 +1,59 @@
+<div id="print-section">
+  <div class="row" style="margin: 0px;">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center">
+        <img class="authoritti-img" src="../../../../assets/images/report-white.png" style="max-width: 32%;" alt="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-5">
+        <div class="d-flex justify-content-center">
+          <span>
+            {{userData.name}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;{{updatedAt | date}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-4">
+        <div class="d-flex justify-content-center">
+          <span style="font-size:25px ;">
+            {{appTitle}} Report
+          </span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row header mt-4">
+      <div class="col-md-6">
+        <span class="d-flex justify-content-center">Name</span>
+      </div>
+      <div class="col-md-6"><span class="d-flex justify-content-center">Score</span> </div>
+    </div>
+    <ng-container>
+      <div class="row p-0">
+        <div class="col-md-6 p-0">
+          <ng-container *ngFor="let data of sortedCategoryName">
+            <span class="d-flex justify-content-center p-2"
+              style="border-bottom: 1px solid black ;  box-shadow: 2px 0px 2px 0px black !important;">
+              <span>{{data}}</span>
+            </span>
+          </ng-container>
+        </div>
+        <div class="col-md-6 p-0">
+          <ng-container *ngFor="let score of  sortedCategoryScore">
+            <span class="d-flex justify-content-center p-2"
+              style="border-bottom: 1px solid black ;  box-shadow: 2px 0px 2px 0px black !important;">
+              <span style="margin-left: -33px;">{{score?score:'-'}}</span>
+            </span>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="footer">Copyright &#169; {{updatedAt | date}} Glory Autotech LLP</div>
+</div>
+<div style="visibility: hidden;">
+  <button id="print" [printTitle]="appTitle" printSectionId="print-section" [useExistingCss]="true" ngxPrint></button>
+</div>

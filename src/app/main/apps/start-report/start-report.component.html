@@ -1,0 +1,114 @@
+<div style="
+    max-height: calc(83vh - 8px);
+    height: auto;
+    overflow-y: auto;
+    padding: 20px 10px;">
+
+  <ng-container *ngIf="activePage && activePage.intro && !submitFlag ">
+    <app-intro [data]="activePage.intro"></app-intro>
+  </ng-container>
+
+  <ng-container *ngIf="activePage && activePage.section && !submitFlag">
+    <app-section [data]="activePage.section"></app-section>
+  </ng-container>
+
+  <ng-container *ngIf="activePage && activePage.questioner && !submitFlag ">
+    <app-questioner [data]="activePage.questioner" [pageData]="pageData" [currentIndex]="currentIndex"
+      [multiCol]="multiColFlag[activePage._id]"></app-questioner>
+  </ng-container>
+
+  <ng-container *ngIf="activePage && activePage.dynamic_question && !submitFlag ">
+    <app-questioner-dynamic [currentIndex]="currentIndex" [data]="activePage.dynamic_question"
+      (backToStart)="setActivePage($event)" [pageData]="pageData"   ></app-questioner-dynamic>
+  </ng-container>
+  <ng-container *ngIf="activePage && activePage?.custom_template?.name ==='emotions'  && !submitFlag ">
+    <app-emotions [data]="activePage.custom_template"></app-emotions>
+  </ng-container>
+  <ng-container *ngIf="activePage && activePage?.custom_template?.name === 'passion' && !submitFlag">
+    <app-passion [data]="activePage.custom_template" [pageData]="pageData" [currentIndex]="currentIndex"></app-passion>
+  </ng-container>
+  <ng-container *ngIf="activePage && activePage?.custom_template?.name === 'profession' && !submitFlag">
+    <app-profession [data]="activePage.custom_template" [pageData]="pageData" [currentIndex]="currentIndex">
+    </app-profession>
+  </ng-container>
+  <ng-container *ngIf="activePage && activePage?.custom_template?.name === 'goals' && !submitFlag ">
+    <app-goals></app-goals>
+  </ng-container>
+
+  <!-- ----Report Type--- -->
+
+  <ng-container *ngIf="submitFlag && addedReport && reportType == 'archetype'">
+    <app-arc-type [reportData]="addedReport" [updatedAt]="createdAt"></app-arc-type>
+  </ng-container>
+  <ng-container *ngIf="submitFlag && addedReport && reportType == 'driver'">
+    <app-egoistic-type [data]="pageData" [updatedAt]="createdAt" [reportData]="addedReport"></app-egoistic-type>
+  </ng-container>
+  <ng-container *ngIf="submitFlag && addedReport && reportType == 'skills'">
+    <app-skill-type [data]="pageData" [updatedAt]="createdAt" [reportType]="reportType" [reportData]="addedReport"></app-skill-type>
+  </ng-container>
+  <ng-container *ngIf="submitFlag &&
+   addedReport && reportType == 'traits'">
+    <app-trait-type [data]="pageData" [updatedAt]="createdAt" [reportType]="reportType" [reportData]="addedReport"></app-trait-type>
+  </ng-container>
+  <ng-container *ngIf="submitFlag && reportType == 'financialGoals'">
+    <app-financial-goals></app-financial-goals>
+  </ng-container>
+  <ng-container *ngIf="
+      submitFlag &&
+      addedReport &&
+      (reportType == 'simple' || reportType == 'emotions' || reportType == 'naturalGifts')">
+    <app-simple [data]="pageData" [reportType]="reportType" [updatedAt]="createdAt" [reportData]="addedReport"></app-simple>
+  </ng-container>
+
+</div>
+
+<div class="row" *ngIf="nextButton" style="
+    background-color: #746868;
+    padding: 8px;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;">
+  <ng-container>
+    <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'" style="padding: 0">
+      <div class="d-flex" style="justify-content: space-between">
+        <div *ngIf="pageData && pageData.length" class="ml-3 mt-1">
+          Page {{ currentIndex + 1 }}/{{ pageData.length }}
+        </div>
+        <div class="d-flex">
+          <div [ngStyle]="
+            this.submitFlag ? { display: 'none' } : { display: 'block' }">
+            <button (click)="previousPage()" *ngIf="((currentIndex + 1 !== 1 ))" class="btn submit-btn"
+              style="background-color: #020201 !important">
+              Previous</button>&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+          <div>
+            <button (click)="nextPage()" *ngIf="currentIndex + 1 !== (pageData && pageData.length) && !submitFlag"
+              class="btn submit-btn" style="background-color: #e91e63 !important">
+              Next
+            </button>
+          </div>
+          <div [ngStyle]="
+            this.submitFlag ? { display: 'none' } : { display: 'block' }
+          ">
+            <button (click)="submitPage()" *ngIf="(currentIndex + 1 == (pageData && pageData.length) && !editFlag)"
+              class="btn submit-btn" style="background-color: #e91e63 !important">
+              Submit
+            </button>
+            <button (click)="updatePage()" *ngIf="(currentIndex + 1 == (pageData && pageData.length) && editFlag)"
+              class="btn submit-btn" style="background-color: #e91e63 !important">
+              Update
+            </button>
+          </div>
+
+          <div
+            *ngIf="(this.printReportFlag || (editFlag && currentIndex + 1 == (pageData && pageData.length)))&& !previousFlag">
+            <button (click)="PrintReport()" class="btn submit-btn" style="background-color: #e91e63 !important">
+              Print
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

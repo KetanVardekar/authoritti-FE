@@ -1,0 +1,276 @@
+<div>
+  <div class="row mt-3" style="margin: 0;">
+
+    <div class="col-md-5"></div>
+    <h4 class="col-md-3">Questionnaire</h4>
+    <div class="col-md-4 d-flex" style="align-items: center;justify-content: space-evenly;">
+      <i style="color: #e91e63;" (click)="editQuestioner()" class="fas fa-edit icon-color pointer"
+        aria-hidden="true"></i>
+      <i (click)="routeBack()" style="color: #e91e63;
+      font-size: 25px;" class="fa fa-arrow-circle-left pointer" aria-hidden="true"></i>
+    </div>
+
+  </div>
+
+  <div class="row" style="margin: 0;">
+    <div class="col-md-12">
+
+      <h4 class="ml-4" style="color: grey;">{{title}}</h4>
+    </div>
+  </div>
+  <div class="row" style="margin: 0;">
+    <div class="col-md-12  ">
+      <div class="d-flex ml-4">
+        <div *ngIf="this.active === false">
+          <div style="color:grey">Deactive</div>
+        </div>
+        <div *ngIf="this.active === true" style="color:#e91e63">Active</div>
+        &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <ng-container *ngIf="categories" >
+        <div style="color:grey">Category</div><span> : {{categories}}</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </ng-container>
+      <ng-container *ngIf="group" >
+        <div style="color:grey">Groups</div><span> : {{group}}</span></ng-container>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row  m-0">
+    <div class="col-md-12 mt-3">
+      <p class="ml-4" style="color: grey;font-size:22px" >{{description}}</p>
+    </div>
+  </div>
+  <div class="row mt-3" style="margin: 0;">
+
+    <div class="col-md-5"></div>
+    <h4 class="col-md-3">Questions</h4>
+    <div class=" col-md-4 d-flex justify-content-center pointer" (click)="addQuestion()">
+      <i class="fa fa-plus" style="cursor: pointer;color: #e91e63;" aria-hidden="true"></i>
+    </div>
+
+  </div>
+  <div class="example-boundary" style="height: 57vh; overflow-y: auto" cdkScrollable >
+  <div  class="row grab " style="margin: 0px;" cdkDropList  (cdkDropListDropped)="drop($event)">
+    <div *ngFor="let question of questionsList;let i=index"  >
+      <div cdkDrag>
+      <!-- ---------- Multiple choice Question --------- -->
+      <div class="col-md-12" style="padding: 0px;" *ngIf="question?.question?.multipleChoice
+    ">
+        <div class="d-flex " style="padding: 18px; border-bottom: 1px solid black;" >
+
+
+          <div class="col-md-1">{{i+1}}</div>
+
+          <div class="col-md-7">
+            <div class="word-break">{{question.question.multipleChoice.title}}</div>
+            <div class="d-flex">
+              <div style="color:grey">Type</div><span> : Check</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Options</div><span> : {{question.question.multipleChoice.options.length}}</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Answer Up To</div><span> :
+                {{question.question.multipleChoice.maxAnswerCount}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editMultipleChoice(question._id);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fas fa-edit icon-color mt-2 pointer" aria-hidden="true"></i>
+              </div>
+              <div (click)="deleteQuestion(i);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fa fa-trash icon-color mt-2 pointer" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ------------Multi Text Input----- -->
+      <div class="col-md-12" style="padding: 0px;" *ngIf="question?.question?.multiTextInput
+
+    ">
+        <div class="d-flex " style="padding: 18px; border-bottom: 1px solid black;" >
+
+
+          <div class="col-md-1">{{i+1}}</div>
+
+          <div class="col-md-7">
+            <div class="word-break">{{question.question.multiTextInput.title}}</div>
+            <div class="d-flex">
+              <div style="color:grey">Type</div><span> : Multiple Text Inputs</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Inputs</div><span> : {{question.question.multiTextInput.placeholder.length}}</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editMultiTextInput(question._id);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fas fa-edit icon-color  pointer mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)="deleteQuestion(i);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ------------Single Choice----------- -->
+      <div class="col-md-12" style="padding: 0px;" *ngIf="question?.question?.singleChoice
+
+    ">
+        <div class="d-flex " style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1">{{i+1}}</div>
+
+          <div class="col-md-7">
+            <div class="word-break">{{question.question.singleChoice.title}}</div>
+            <div class="d-flex">
+              <div style="color:grey">Type</div><span> : Radio</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Options</div><span> : {{question.question.singleChoice.options.length}}</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              <div *ngIf="question.question.singleChoice.other" style="color:grey">Has Other </div><span *ngIf="question.question.singleChoice.other"> : Yes</span>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editSingleChoice(question._id);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)="deleteQuestion(i);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ------------Slider-------------- -->
+      <div class="col-md-12" style="padding: 0px;" *ngIf="question?.question?.slider
+
+    ">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1">{{i+1}}</div>
+
+          <div class="col-md-7">
+            <div class="word-break">{{question.question.slider.title}}</div>
+            <div class="d-flex">
+              <div style="color:grey">Type</div><span> : Slider</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">MinValue</div><span> : {{question.question.slider.minVal
+                }}</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">MaxValue</div><span> : {{question.question.slider.maxVal
+                }}</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">DefaultValue</div><span> : {{question.question.slider.defaultAnswer}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editSlider(question._id);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)=" deleteQuestion(i);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ---------------Text Area---------- -->
+      <div class="col-md-12" style="padding: 0px;" *ngIf="question?.question?.textArea
+
+    ">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1">{{i+1}}</div>
+
+          <div class="col-md-7">
+            <div class="word-break">{{question.question.textArea.title}}</div>
+            <div class="d-flex">
+              <div style="color:grey">Type</div><span> : Text Area</span> &nbsp;
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editTextArea(question._id);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)="  deleteQuestion(i);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fa fa-trash pointer icon-color mt-2" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ------------Text Input-------- -->
+      <div class="col-md-12" style="padding: 0px;" *ngIf="question?.question?.textInput
+
+    ">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1">{{i+1}}</div>
+
+          <div class="col-md-7">
+            <div class="word-break">{{question.question.textInput.title}}</div>
+            <div class="d-flex">
+              <div style="color:grey">Type</div><span> : Text Input</span> &nbsp;
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)=" editTextInput(question._id);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fas fa-edit  pointer icon-color mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)="  deleteQuestion(i);$event.stopPropagation()">
+                <i style="color: #e91e63;" class="fa fa-trash pointer icon-color mt-2" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- Pages , Categories , Groups Icons -->
+<!-- <div class="icon-outer-container row">
+  <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'">
+    <div class="d-flex" style="justify-content: space-evenly;">
+      <div class="mt-2" (click)="pages()">
+        <i class="fa fa-file ml-2 pointer" [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}"
+          aria-hidden="true" style="font-size: 21px;"></i>
+        <div [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Pages
+        </div>
+      </div>
+      <div class="mt-2" (click)="categoriesRoute()">
+        <i class="fa fa-list-alt ml-4 pointer"
+          [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" aria-hidden="true"
+          style="font-size: 24px;"></i>
+        <div [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">
+          Categories</div>
+      </div>
+      <div class="mt-2" (click)="groups()">
+        <i class='fas fa-code-branch ml-3 pointer'
+          [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 24px;"></i>
+        <div [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Groups
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div> -->

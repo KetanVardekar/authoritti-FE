@@ -1,0 +1,50 @@
+<div class="row m-0">
+  <div class="col-md-12">
+    <table class="table  table-striped mt-5" style="color: white; border-left: 3px solid black;">
+      <thead style="text-align: center;">
+
+        <tr>
+          <th scope="col">Traits</th>
+          <th scope="col">Average Score</th>
+          <th scope="col">{{tableSkillData.colOneTitle}}</th>
+          <th scope="col">{{tableSkillData.colTwoTitle}}</th>
+          <th scope="col">{{tableSkillData.colThreeTitle}}</th>
+          <th scope="col">{{tableSkillData.colFourTitle}}</th>
+          <th scope="col">{{tableSkillData.colFiveTitle}}</th>
+          <th scope="col">Feminine</th>
+          <th scope="col">Masculine</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody style="text-align: center;">
+        <ng-container>
+          <tr *ngFor="let data of traitsValue | keyvalue;let i=index">
+
+            <td class="first-col">{{data.key}}</td>
+            <td class="second-col">{{$any(data.value).score}}</td>
+            <td style="background-color: #f58b9e;"><input class="pointer" type="radio" name="name-{{i}}"></td>
+            <td style="background-color: #f58b9e;"><input class="pointer" type="radio" name="name-{{i}}"></td>
+            <td style="background-color: #f58b9e;"><input class="pointer" type="radio" name="name-{{i}}"></td>
+            <td style="background-color: #f58b9e;"><input class="pointer" type="radio" name="name-{{i}}"
+                (change)="colFour($event,tableSkillData.colFourTitle,data.key,$any(data.value).score)"
+                [checked]="$any(data.value).colName == tableSkillData.colFourTitle"></td>
+            <td style="background-color: #f58b9e;"><input class="pointer" type="radio" name="name-{{i}}"
+                (change)="colFive($event,tableSkillData.colFiveTitle,data.key,$any(data.value).score)"
+                [checked]="$any(data.value).colName == tableSkillData.colFiveTitle"></td>
+            <td style="background-color: #737373;"><input class="pointer" type="radio" id="{{i}}" name="gender-{{i}}"
+                (change)="colSix($event,'Feminine',data.key,$any(data.value).score)"
+                [checked]="$any(data.value).dominant == 'Feminine'"></td>
+            <td style="background-color: #737373;"><input class="pointer" type="radio" id="{{i}}" name="gender-{{i}}"
+                (change)="colSeven($event,'Masculine',data.key,$any(data.value).score)"
+                [checked]="$any(data.value).dominant == 'Masculine'"></td>
+          </tr>
+        </ng-container>
+
+
+      </tbody>
+
+    </table>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="row mb-4 ques-container">
+  <div class="col-md-12" style="padding: 0;">
+
+    <span class="index p-1">#{{index + 1}}</span>
+
+    <div class="col-md-12 p-0 mt-3">
+      <span>{{data.title}}</span>
+    </div>
+
+    <div class="col-md-12 p-0">
+      <textarea [disabled]="viewMode" rows="2" name="placeholder" class="form-control form-control-lg mt-3" [(ngModel)]="data.finalAnswer"
+        [placeholder]="data.placeholder ? data.placeholder : 'Enter Text'" required></textarea>
+    </div>
+  </div>
+</div>

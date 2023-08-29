@@ -1,0 +1,42 @@
+<div class="title-section">
+  <div class="title">
+    {{data.title}}
+  </div>
+  <div class="desc">
+    {{data.description}}
+  </div>
+</div>
+
+<ng-container *ngIf="data?.template?.template?.slider">
+  <app-slider-dynamic [viewMode]="viewMode" [allPagesData]="pageData" [activePageData]="data" (gotoPreviousPage)="gotoPreviousPage($event)"
+    [currentIndex]="currentIndex"  ></app-slider-dynamic>
+</ng-container>
+<ng-container *ngIf="data?.template?.template?.tableYesNo">
+  <app-table-yes-no-dynamic [allPagesData]="pageData" [activePageData]="data"
+    (gotoPreviousPage)="gotoPreviousPage($event)" [currentIndex]="currentIndex"></app-table-yes-no-dynamic>
+</ng-container>
+<ng-container *ngIf="data?.template?.template?.tableDropDown">
+  <app-table-drop-down-dynamic [allPagesData]="pageData" [activePageData]="data"
+    (gotoPreviousPage)="gotoPreviousPage($event)" [currentIndex]="currentIndex"></app-table-drop-down-dynamic>
+</ng-container>
+
+<ng-container *ngIf="data?.template?.template?.multipleChoice">
+  <app-multi-choice-dynamic [allPagesData]="pageData" [activePageData]="data"
+    (gotoPreviousPage)="gotoPreviousPage($event)" [currentIndex]="currentIndex"></app-multi-choice-dynamic>
+</ng-container>
+<ng-container *ngIf="data?.template?.template?.tableSkill" >
+  <app-table-skill-dynamic [allPagesData]="pageData" [activePageData]="data"
+   [currentIndex]="currentIndex" ></app-table-skill-dynamic>
+</ng-container>
+
+<ng-container *ngIf="data?.template?.template?.tableTrait" >
+  <app-table-trait-dynamic  [allPagesData]="pageData" [activePageData]="data"
+  [currentIndex]="currentIndex" ></app-table-trait-dynamic>
+</ng-container>
+
+<ng-container  *ngIf="data?.template?.template?.tableSkillTrait" >
+  <app-table-skill-trait-dynamic  [allPagesData]="pageData" [activePageData]="data"
+  [currentIndex]="currentIndex" ></app-table-skill-trait-dynamic>
+</ng-container>
+
+

@@ -1,0 +1,393 @@
+<div style="height: calc(93vh - 13px);">
+  <div class="row" style="margin: 0px;">
+    <div class="col-md-12" style="padding: 0px;">
+      <!-- Page Header -->
+      <div class="card" *ngIf="this.activeTab ==='page'  ">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="col-md-1">Sr. no.</div>
+            <div class="col-md-6">Name</div>
+            <div class="col-md-1">Active</div>
+            <div class="col-md-2 d-flex justify-content-center">Actions</div>
+            <div class="col-md-2 d-flex justify-content-end">
+              <!-- Pages -->
+              <div *ngIf="this.activeTab === 'page'">
+                <div class=" d-flex justify-content-end" (click)="addPages()">
+                  <i style=color:#e91e63 class="fa fa-plus" style="cursor: pointer;" aria-hidden="true"></i>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Categories,Groups Header -->
+      <div class="card" *ngIf="(this.activeTab ==='categories') || (this.activeTab ==='groups') ">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="col-md-2">Sr. no.</div>
+            <div class="col-md-5">Name</div>
+            <div class="col-md-2 d-flex justify-content-center">Actions</div>
+            <div class="col-md-2 d-flex justify-content-end">
+              <!-- Pages -->
+              <!-- <div *ngIf="this.activeTab === 'page'">
+                <div class=" d-flex justify-content-end" (click)="addPages()">
+                  <i class="fa fa-plus" style="cursor: pointer;" aria-hidden="true"></i>
+                </div>
+              </div> -->
+              <!-- Categories -->
+              <div *ngIf="this.activeTab === 'categories'" (click)="addCategories()">
+                <div class=" d-flex justify-content-end">
+                  <i style="color:#e91e63!important" class="fa fa-plus" style="cursor: pointer;" aria-hidden="true"></i>
+                </div>
+              </div>
+              <!-- Groups -->
+              <div *ngIf="this.activeTab === 'groups'" (click)="addGroups()">
+                <div class=" d-flex justify-content-end">
+                  <i style="color:#e91e63!important" class="fa fa-plus" style="cursor: pointer;" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Pages List -->
+  <div *ngIf="this.activeTab === 'page'">
+
+      <div [ngClass]="showSidebar ? 'outer-container-sidebar' : 'outer-container'" cdkDropList
+        (cdkDropListDropped)="drop($event,pagesListData)">
+
+        <div *ngFor="let pages of pagesListData;let i =index">
+          <div cdkDrag>
+            <!-- Intro -->
+            <div class="row " style="margin: 0px;" *ngIf="pages.intro">
+              <div class="col-md-12" style="padding: 0px;">
+                <div class="d-flex grab" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+                  <div class="col-md-1">{{i+1}}</div>
+
+                  <div class="col-md-6">
+                    <div>{{pages.intro.title}}</div>
+
+                  </div>
+                  <div class="col-md-1">
+                    <div class="icon-color mt-2">
+                      <label class="switch">
+                        <input type="checkbox" (change)="activeInActive('intro',pages._id ,$event,pages.intro,i)"
+                          [checked]="pages.intro.active === true">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="d-flex" style="justify-content: space-evenly;">
+                      <div class="pointer" (click)="editPageRoute(pages._id)"><i class="fas fa-edit icon-color mt-2"
+                          aria-hidden="true"></i>
+                      </div>
+                      <div class="pointer" (click)="deletePage(i,pages._id)"><i class="fa fa-trash icon-color mt-2"
+                          aria-hidden="true"></i>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Section -->
+            <div class="row" style="margin: 0px;" *ngIf="pages.section">
+              <div class="col-md-12" style="padding: 0px;">
+                <div class="d-flex  grab" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+                  <div class="col-md-1 ">{{i+1}}</div>
+
+                  <div class="col-md-6 ">
+                    <div>{{pages.section.title}}</div>
+
+                  </div>
+                  <div class="col-md-1">
+                    <div class="icon-color mt-2">
+                      <label class="switch">
+                        <input type="checkbox" (change)="activeInActive('section',pages._id ,$event ,pages.section,i)"
+                          [checked]="pages.section.active === true">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="d-flex" style="justify-content: space-evenly;">
+                      <div (click)="editPageRoute(pages._id)"><i class="fas fa-edit icon-color pointer mt-2"
+                          aria-hidden="true"></i>
+                      </div>
+                      <div (click)="deletePage(i,pages._id)"><i class="fa fa-trash icon-color pointer mt-2"
+                          aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Custom Template -->
+            <div class="row" style="margin: 0px;" *ngIf="pages.custom_template">
+              <div class="col-md-12" style="padding: 0px;">
+                <div class="d-flex  grab" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+                  <div class="col-md-1 ">{{i+1}}</div>
+
+                  <div class="col-md-6 ">
+                    <div>{{pages.custom_template.name}}</div>
+
+                  </div>
+                  <div class="col-md-1">
+                    <div class="icon-color mt-2">
+                      <label class="switch">
+                        <input type="checkbox"
+                          (change)="activeInActive('custom_template',pages._id ,$event ,pages.custom_template,i)"
+                          [checked]="pages.custom_template.active === true">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="d-flex" style="justify-content: space-evenly;">
+                      <div (click)="editPageRoute(pages._id)"><i class="fas fa-edit icon-color pointer mt-2"
+                          aria-hidden="true"></i>
+                      </div>
+                      <div (click)="deletePage(i,pages._id)"><i class="fa fa-trash icon-color pointer mt-2"
+                          aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Questionarrie -->
+            <div class="row " style="margin: 0px;" *ngIf="pages.questioner">
+              <div (click)="viewQuestioner(pages._id)" class="col-md-12 pointer" style="padding: 0px;">
+                <div class="d-flex grab" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+                  <div class="col-md-1">{{i+1}}</div>
+
+                  <div class="col-md-6">
+                    <div>{{pages.questioner.title}}</div>
+                    <div class="d-flex">
+                      <div style="color:grey">Questions</div><span style="width: 35px;"> : {{pages.questioner.questions
+                        ?
+                        pages.questioner.questions.length : 0}}</span> &nbsp;
+                      &nbsp;&nbsp;&nbsp;
+                      <ng-container *ngIf="pages.questioner?.categories?.name">
+                        <div style="color:grey">Category</div><span style="width: 150px;word-wrap: break-word;"> :
+                          {{pages.questioner?.categories?.name
+
+                          }}</span>&nbsp; &nbsp;&nbsp;&nbsp;
+                      </ng-container>
+                      <ng-container *ngIf="pages.questioner?.group?.name">
+                        <div style="color:grey">Groups</div><span style="width: 150px;word-wrap: break-word;"> :
+                          {{pages.questioner?.group?.name
+
+                          }}</span>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="col-md-1" (click)="$event.stopPropagation()">
+                    <div class="icon-color mt-2">
+                      <label class="switch">
+                        <input type="checkbox"
+                          (change)="activeInActive('questioner',pages._id ,$event ,pages.questioner,i)"
+                          [checked]="pages.questioner.active === true">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="d-flex" style="justify-content: space-evenly;">
+                      <div (click)="editPageRoute(pages._id);$event.stopPropagation()"><i
+                          class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i></div>
+                      <div (click)=" deletePage(i,pages._id);$event.stopPropagation()"> <i
+                          class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Questionarrie Dynamic -->
+            <div class="row " style="margin: 0px;" *ngIf="pages.dynamic_question
+        ">
+              <div class="col-md-12 pointer" (click)="viewQuestionerDynamic(pages._id)" style="padding: 0px;">
+                <div class="d-flex grab" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+                  <div class="col-md-1">{{i+1}}</div>
+
+                  <div class="col-md-6">
+                    <div>{{pages.dynamic_question.title
+                      }}</div>
+                    <div class="d-flex">
+                      <div style="color:grey">Page</div><span> : Dynamic</span> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <ng-container *ngIf="pages.dynamic_question?.group?.name">
+                        <div style="color:grey">Groups</div><span> : {{pages.dynamic_question?.group?.name}}</span>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="col-md-1" (click)="$event.stopPropagation()">
+                    <div class="icon-color mt-2">
+                      <label class="switch">
+                        <input type="checkbox"
+                          (change)="activeInActive('dynamic_question',pages._id ,$event ,pages.dynamic_question,i)"
+                          [checked]="pages.dynamic_question.active === true">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="d-flex" style="justify-content: space-evenly;">
+                      <div (click)="editPageRoute(pages._id);$event.stopPropagation()"><i
+                          class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i></div>
+                      <div (click)="deletePage(i,pages._id);$event.stopPropagation()"><i
+                          class="fa fa-trash pointer icon-color mt-2" aria-hidden="true"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Report -->
+          <div class="row" style="margin: 0px;" *ngIf="pages.report">
+            <div class="col-md-12" style="padding: 0px;">
+              <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+                <div class="col-md-1 "></div>
+
+                <div class="col-md-6 ">
+                  <div>Report</div>
+                  <div style="color:grey">{{pages.report.type}}</div>
+
+                </div>
+                <div class="col-md-1">
+                  <div class="icon-color mt-2">
+                    <label class="switch">
+                      <input type="checkbox" (change)="activeInActive('report',pages._id ,$event,pages.report,i)"
+                        [checked]="pages.report.active === true">
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="d-flex" style="justify-content:space-evenly;">
+                    <div (click)="editPageRoute(pages._id)"><i class="fas fa-edit icon-color pointer mt-2"
+                        aria-hidden="true"></i>
+                    </div>
+                    <div (click)="deletePage(i,pages._id)"><i class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+  </div>
+  <!-- Categories -->
+
+  <div *ngIf="this.activeTab ==='categories'">
+    <div class="outer-container">
+      <div class="row" style="margin: 0;" *ngFor="let category of categoriesList;let i = index ">
+        <div class="col-md-12" style="padding: 0;">
+          <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+            <div class="col-md-2">{{i+1}}</div>
+
+            <div class="col-md-5">
+              <div>{{category.name}}</div>
+              <div style="color: grey;">{{category.description}}</div>
+
+            </div>
+
+            <div class="col-md-4">
+              <div class="d-flex" style="justify-content: space-evenly;">
+                <div class="pointer" (click)="editCategory(category._id)"><i class="fas fa-edit icon-color mt-2"
+                    aria-hidden="true"></i>
+                </div>
+                <div class="pointer" (click)="deleteCategoryById(category._id)"><i class="fa fa-trash icon-color mt-2"
+                    aria-hidden="true"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Groups -->
+  <div *ngIf="this.activeTab ==='groups'">
+    <div class="outer-container">
+      <div class="row" style="margin: 0;" *ngFor="let group of groupsList;let i =index ">
+        <div class="col-md-12" style="padding: 0;">
+          <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+            <div class="col-md-2">{{i+1}}</div>
+
+            <div class="col-md-5">
+              <div>{{group.name}}</div>
+              <div style="color:grey">{{group.title}}</div>
+
+            </div>
+
+            <div class="col-md-4">
+              <div class="d-flex" style="justify-content: space-evenly;">
+                <div class="pointer" (click)="editGroup(group._id)"><i class="fas fa-edit icon-color mt-2"
+                    aria-hidden="true"></i></div>
+                <div class="pointer" (click)="deleteGroupById(group._id)"><i class="fa fa-trash icon-color mt-2"
+                    aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Pages , Categories , Groups Icons -->
+  <div class="icon-outer-container row">
+    <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'">
+      <div class="d-flex" style="justify-content: space-evenly;">
+        <div class="mt-2" (click)="pages()">
+          <i class="fa fa-file ml-2 pointer" [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}"
+            aria-hidden="true" style="font-size: 21px;"></i>
+          <div [ngStyle]="this.activeTab ==='page' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Pages
+          </div>
+        </div>
+        <div class="mt-2" (click)="categories()">
+          <i class="fa fa-list-alt ml-4 pointer"
+            [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" aria-hidden="true"
+            style="font-size: 24px;"></i>
+          <div [ngStyle]="this.activeTab ==='categories' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">
+            Categories</div>
+        </div>
+        <div class="mt-2" (click)="groups()">
+          <i class='fas fa-code-branch ml-3 pointer'
+            [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 24px;"></i>
+          <div [ngStyle]="this.activeTab ==='groups' ? {color:'#e91e63'}:{color:'grey'}" style="font-size: 14px;">Groups
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

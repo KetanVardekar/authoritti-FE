@@ -1,0 +1,102 @@
+<div class="row" style="margin: 0px;">
+  <div class="col-md-12">
+
+    <span class="d-flex justify-content-center my-4">
+      <h4>Average Sales Price Per Product/Service</h4>
+    </span>
+  </div>
+
+
+  <div class="row my-3" style="text-align: center;">
+    <div class="col-md-1">
+      <span>#</span>
+    </div>
+    <div class="col-md-4">
+      <span>Product / Service</span>
+    </div>
+    <div class="col-md-3">
+      <span>Dollar Per Item</span>
+    </div>
+    <div class="col-md-3">
+      <span>Total Sales in %</span>
+    </div>
+    <div class="col-md-1">
+      <span>Actions</span>
+    </div>
+  </div>
+
+  <div style="max-height: 49vh;overflow-y: auto;">
+    <div class="row d-flex" style="text-align: center;align-items: center;"
+      *ngFor="let item of appObj.averageSalePrice;let i = index">
+      <div class="col-md-1">
+        <span>{{i+1}}</span>
+      </div>
+      <div class="col-md-4">
+        <input class="form-control my-2" (input)="calcPer()" [(ngModel)]="item.product" style="height: 40px;" type="text" name="prod-{{i}}"
+          id="prod-{{i}}" placeholder="Enter Product / Service">
+      </div>
+      <div class="col-md-3">
+        <input class="form-control my-2" pattern="/d+" [(ngModel)]="item.dollarPerItem" #dollarPerItem="ngModel"
+          style="height: 40px;" type="number" min="0" name="dollarPerItem-{{i}}" id="dollarPerItem-{{i}}"
+          placeholder="Enter Dollar per Item" (input)="calcPer()" oninput="validity.valid||(value='');">
+      </div>
+      <div class="col-md-3">
+        <input class="form-control my-2" pattern="/d+" [(ngModel)]="item.totalPercentageSales"
+          #totalPercentageSales="ngModel" style="height: 40px;" type="number" min="0" name="totalPercentageSales-{{i}}"
+          id="totalPercentageSales-{{i}}" max="100" (input)="calcPer()" placeholder="Enter Sales in %"
+          oninput="validity.valid||(value='');">
+      </div>
+      <div class="col-md-1 d-flex" style="justify-content: space-between;align-items: center;">
+        <div *ngIf="i == appObj.averageSalePrice.length - 1" (click)="addSales(item)"><i class="fa fa-plus"
+            style="cursor: pointer;" aria-hidden="true"></i></div>
+        <div (click)="removeSales(i)"><i class="fa fa-trash icon-color mt-2" aria-hidden="true"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="text-align: center;">
+    <div class="col-md-1"></div>
+    <div class="col-md-4"></div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+      <span style="font-size: 24px;font-weight: bold;">Total : {{totalSales}}%</span><br>
+      <span style="font-size: 12px;">(Sales Total must be 100%)</span>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="row" style="
+    background-color: #746868;
+    padding: 8px;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;">
+
+  <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'" style="padding: 0">
+    <div class="d-flex" style="justify-content: space-between">
+      <div class="ml-3 mt-1">
+        Page 2/7
+      </div>
+      <div class="d-flex">
+        <div>
+          <button (click)="previousPage()" class="btn submit-btn" style="background-color: #020201 !important">
+            Previous</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div [ngStyle]="{ 'cursor' : totalSales !== 100 ? 'not-allowed' : 'pointer' }">
+          <button (click)="nextPage()" [disabled]="totalSales !== 100 || !valid" class="btn submit-btn"
+            style="background-color: #e91e63 !important">
+            Next
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

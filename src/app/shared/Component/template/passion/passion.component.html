@@ -1,0 +1,55 @@
+<div class="row header ">
+  <div class="col-md-12">
+    <span class="d-flex justify-content-center" style="font-size: 22px;">List Your Hobbies That Are Natural To
+      You</span>
+  </div>
+</div>
+
+<div class="row m-0">
+  <div class="col-md-12 mt-5">
+    <div class="d-flex">
+
+      <div class="col-md-1 mt-3 d-flex justify-content-center ">#</div>
+      <div class="col-md-3">
+        <input type="text" class="form-control form-control-lg" name="name" placeholder="Name" [(ngModel)]="name">
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control form-control-lg" name="description"
+          placeholder="Description of Passion/Hobby" [(ngModel)]="description">
+      </div>
+      <div class="col-md-3">
+        <input type="number" class="form-control form-control-lg" name="start"
+          placeholder="When did You Start This Passion/Hobby" [(ngModel)]="year">
+      </div>
+
+      <div *ngIf="addIconFlag" class="col-md-1 mt-3 d-flex justify-content-center pointer" (click)="addDetails()"><i
+          class="fa fa-plus" aria-hidden="true"></i></div>
+          <div *ngIf="editIconFlag" class="col-md-1 mt-3 d-flex justify-content-center pointer" (click)="updateDetails()">
+            <i class="fa fa-check" style="color: #e91e63;" aria-hidden="true"></i>
+          </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row m-0">
+  <div class="col-md-12 mt-5" >
+    <ng-container *ngFor="let data of passionDataList;let i=index ">
+      <div class="d-flex p-2" [ngClass]="this.passionDataList.length>=1?'border-down':'no-border'">
+        <div class="col-md-1 d-flex justify-content-center">{{i+1}}</div>
+        <div class="col-md-3 d-flex justify-content-center ">{{data.name}}</div>
+        <div class="col-md-4 d-flex justify-content-center ">{{data.description}}</div>
+        <div class="col-md-3 d-flex justify-content-center">{{data.year}}</div>
+
+        <div class="col-md-1">
+          <div class="d-flex" style="justify-content: space-evenly;">
+            <div (click)="editData(i)"><i class="fas fa-edit icon-color mt-2 pointer" aria-hidden="true"
+                style="color: #e91e63;"></i></div>
+            <div (click)="deleteData(i)"><i class="fa fa-trash icon-color mt-2  pointer" aria-hidden="true"
+                style="color: #e91e63;"></i></div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

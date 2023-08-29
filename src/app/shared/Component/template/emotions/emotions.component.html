@@ -1,0 +1,37 @@
+<div class="row header ">
+  <div class="col-md-12">
+    <span class="d-flex justify-content-center" style="font-size: 22px;">If You Already Know Your Trigger Emotion Select
+      From Below</span>
+  </div>
+</div>
+
+<div class="row m-0 p-3">
+  <ng-container *ngFor="let data of emotionRadioList;let i=index ">
+    <div class="col-md-2 p-2 mt-4">
+
+      <div class="d-flex">
+        <div>
+          <input class="pointer" type="radio" [value]="data.value" name="radiogroup" [id]="data.value" [checked]="data.checked" (change)="change($event,data.value)"   >
+        </div>
+
+        <label  [for]="data.value" class="pointer ml-2" style="margin-top: -2px;">{{data.value}}</label>
+      </div>
+
+    </div>
+  </ng-container>
+</div>
+
+<div class="mt-4 d-flex justify-content-center" >
+  <button type="submit" class="btn submit-btn" (click)="selectEmotion()" [disabled]="!this.value" >
+    SELECT <span style="text-transform: uppercase;" >{{value}}</span>
+  </button>
+</div>
+<div class="mt-4 d-flex justify-content-center">
+  <span  style="font-size: 20px;" >Or Skip To Know Your Triggerer Emotion</span>
+</div>
+
+<div class="mt-4 d-flex justify-content-center"  >
+  <button type="submit" class="btn submit-btn" (click)="calculate()">
+   CALCULATE
+  </button>
+</div>

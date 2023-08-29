@@ -1,0 +1,112 @@
+<form #myForm="ngForm" (ngSubmit)="myForm.form.valid" style="height: calc(93vh - 10px);
+overflow-y: auto;">
+  <div class="row" style="margin: 15px;">
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="exampleName">Name</label>
+        <input type="text" name="name" class="form-control form-control-lg" id="exampleName" placeholder="Enter Name"
+          [readonly]="this.idOfUser" [(ngModel)]="usersignUpPayload.name" #name="ngModel" required>
+        <small style="color: #e91e63;" *ngIf="(name.touched || myForm.submitted) && name.errors?.['required']">Name is
+          required</small>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1"
+          aria-describedby="emailHelp" placeholder="Enter Email" [readonly]="this.idOfUser" email="true"
+          [(ngModel)]="usersignUpPayload.email" #email="ngModel" required>
+        <small style="color: #e91e63;" *ngIf="(email.touched || myForm.submitted) && email.errors?.['required']">Email
+          is required</small>
+        <small style="color: #e91e63;" *ngIf="(email.touched || myForm.submitted) && email.errors?.['email']">This is
+          not a valid Email</small>
+
+      </div>
+    </div>
+    <div class="col-md-12" *ngIf="!this.idOfUser">
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password"
+          [readonly]="this.idOfUser" [type]="showPasswordNew ? 'text' : 'password'"
+          [(ngModel)]="usersignUpPayload.password" #password="ngModel" required>
+        <small style="color: #e91e63;"
+          *ngIf="(password.touched || myForm.submitted) && password.errors?.['required']">Password is required</small>
+        <span (click)="showHidePasswordNew()">
+          <i *ngIf="showPasswordNew" class="far fa-eye field-icon " id="togglePassword"></i>
+          <i *ngIf="!showPasswordNew" class="far fa-eye-slash field-icon "></i></span>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="exampleName">Maximum Number of Reports</label>
+        <input type="number" pattern="\d+" name="reports" class="form-control form-control-lg" id="exampleName" min="0"
+          placeholder="Enter Number of Reports" [(ngModel)]="usersignUpPayload.numberOfReports" #reports="ngModel"
+          required>
+        <small style="color: #e91e63;"
+          *ngIf="(reports.touched || myForm.submitted) && reports.errors?.['required']">Reports are
+          required</small>
+          <small style="color: #e91e63;"
+          *ngIf="(reports.touched || myForm.submitted) && reports.errors?.['pattern']">Enter Positive Value</small>
+      </div>
+    </div>
+
+    <!-- User Roles -->
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center mt-3" style="color: grey;">
+        <h3>User Permissions</h3>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6" style="margin: 20px 0px;" *ngFor="let apps of appsList;let i =index">
+          <div class="card" style="box-shadow: 1px 1px 4px 2px #e91e63;;
+              background: transparent;
+              border: 1px solid #e91e63;">
+            <div class="card-body" style="padding: 8px 16px;">
+              <div class="row" style="display: flex;align-items: center;">
+                <div class="col-md-6">
+                  {{apps.title}}
+                </div>
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <div class="d-flex" style="justify-content: end;">
+                      <div class="icon-color mt-2">
+                        <label class="switch">
+                          <input type="checkbox" (change)="changeOfView(i,apps._id,$event)" [(ngModel)]=" apps.checked"
+                            name="check-{{i}}">
+                          <span class="slider round"></span>
+                        </label>
+                      </div>
+                      <!-- <input type="checkbox" class="mr-4">
+                          <div>View</div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-12 d-flex mb-lg-3" style="justify-content: space-evenly;">
+      <div style="margin-top:39px;" *ngIf="this.idOfUser">
+        <button class="btn submit-btn" (click)="update()">Update</button>
+      </div>
+      <div style="margin-top:39px;" *ngIf="!this.idOfUser">
+        <button type="submit" class="btn submit-btn" (click)="submit()">Submit</button>
+      </div>
+      <div style="margin-top:39px;">
+        <button class="btn submit-btn" style="background-color: #73736F !important;" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</form>

@@ -1,0 +1,417 @@
+<div id="print-section">
+  <div class="row" style="margin: 0px">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center">
+        <img class="authoritti-img" src="../../../../assets/images/report-white.png" style="max-width: 32%" alt="" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-5">
+        <div class="d-flex justify-content-center">
+          <span>
+            {{
+            userData.name
+            }}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;{{
+              updatedAt | date
+            }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-4">
+        <div class="d-flex justify-content-center">
+          <span style="font-size: 25px"> {{ appTitle }} Report </span>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="reportType == 'emotions'">
+      <div class="row header mt-4">
+        <div class="col-md-12">
+          <span class="d-flex justify-content-center" style="font-size: 19px">Your Trigger Emotion is "{{ emotionValue
+            }}"</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="reportType == 'naturalGifts'">
+    <div class="row header m-0 mt-4">
+      <div class="col-md-6">
+        <span class="d-flex justify-content-center">Name</span>
+      </div>
+      <div class="col-md-6">
+        <span class="d-flex justify-content-center">Score</span>
+      </div>
+    </div>
+    <ng-container *ngIf="reportType == 'naturalGifts'">
+      <div class="row p-0 m-0">
+        <ng-container *ngFor="let data of mainCategoryHeading">
+          <div class="col-md-6 p-0">
+            <span class="d-flex justify-content-center p-2" style="
+                border-bottom: 1px solid black;
+                box-shadow: 2px 0px 2px 0px black !important;
+              ">
+              <span>{{data.name}}</span>
+            </span>
+          </div>
+          <div class="col-md-6 p-0">
+            <span class="d-flex justify-content-center p-2" style="
+                border-bottom: 1px solid black;
+                box-shadow: 2px 0px 2px 0px black !important;
+              ">
+              <span style="margin-left: -33px">{{data.score}}</span>
+            </span>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <!-- --------- Emotion(Except Slider)--------- -->
+  <ng-container *ngIf="reportType == 'emotions'">
+    <!-- ----------multi choice------- -->
+
+    <div class="row mt-4 m-0">
+      <ng-container *ngFor="let data of finalQuestionList; let i = index">
+        <ng-container *ngIf="
+            data.id.question.multipleChoice &&
+            data.id.question.multipleChoice.finalAnswer.length
+          ">
+
+          <span style="color: grey">Q : {{ data.id.question.multipleChoice.title }}</span>
+          <div class="row">
+            <div *ngFor="let data of data.id.question.multipleChoice.finalAnswer" class="col-md-2 pt-2 pb-2">
+              <span class="ml-4 mr-5" style="display: inline-block">
+                {{ data }}</span>
+
+            </div>
+          </div>
+
+        </ng-container>
+        <!-- ---------multi text input--------- -->
+        <ng-container *ngIf="
+            data.id.question.multiTextInput &&
+            data.id.question.multiTextInput.finalAnswer.length
+          ">
+          <div class="row mt-3 m-0">
+            <div class="col-md-12 mt-2">
+              <span style="color: grey">Q : {{ data.id.question.multiTextInput.title }}</span><br />
+            </div>
+
+            <div class="col-md-12 ml-2">
+              <ng-container *ngFor="let data of data.id.question.multiTextInput.finalAnswer">
+                <div class="row ml-3">
+                  <div class="col-md-2 p-2" *ngIf="data.placeholder && data.value">
+                    {{ data.placeholder }}
+                  </div>
+                  <div class="col-md-4 p-2">{{ data.value }}</div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+        <!-- ------------Single Choice---------- -->
+        <ng-container *ngIf="
+            data.id.question.singleChoice &&
+            data.id.question.singleChoice.finalAnswer.length
+          ">
+          <div class="row mt-4 m-0">
+            <div class="col-md-12 mt-2">
+              <span style="color: grey">Q : {{ data.id.question.singleChoice.title }}</span><br />
+
+              <span class="ml-4 mt-3" style="display: inline-block">
+                {{ data.id.question.singleChoice.finalAnswer }}</span>
+            </div>
+          </div>
+        </ng-container>
+        <!-- -----------------Slider----------- -->
+        <ng-container *ngIf="data.id.question.slider && reportType == 'simple'">
+          <div class="row mt-4 m-0">
+            <div class="col-md-3 ml-4">
+              <span style="color: white">{{ data.id.question.slider.title }} =
+                <span>{{
+                  data.id.question.slider.finalAnswer.value
+                  }}</span></span>
+            </div>
+          </div>
+        </ng-container>
+        <!-- ---------Text AreA------------- -->
+        <ng-container *ngIf="
+            data.id.question.textArea &&
+            data.id.question.textArea.finalAnswer.length
+          ">
+          <div class="row mt-4 m-0">
+            <div class="col-md-12 mt-2">
+              <span style="color: grey">Q : {{ data.id.question.textArea.title }}</span><br />
+              <ng-container>
+                <span class="ml-4 mt-3" style="display: inline-block">
+                  {{ data.id.question.textArea.finalAnswer }}</span>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+        <!-- -------------text input------------ -->
+        <ng-container *ngIf="
+            data.id.question.textInput &&
+            data.id.question.textInput.finalAnswer.length
+          ">
+          <div class="row mt-4 m-0">
+            <div class="col-md-12 mt-2">
+              <span style="color: grey">Q : {{ data.id.question.textInput.title }}</span><br />
+              <ng-container>
+                <span class="ml-4 mt-3" style="display: inline-block">
+                  {{ data.id.question.textInput.finalAnswer }}</span>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <!-- -----------------------------------NatURAL Gift && Simple ------------- -->
+  <ng-container *ngIf="reportType == 'naturalGifts' || reportType == 'simple'">
+    <!-- ---Questioner---- -->
+    <ng-container *ngFor="let list of groups | keyvalue; let i = index">
+      <div class="row header mt-4 m-0">
+        <div class="col-md-12">
+          <span class="d-flex justify-content-center" style="font-size: 19px">{{
+            list.key
+            }}</span>
+        </div>
+      </div>
+
+      <div class="row mt-4 m-0">
+        <ng-container *ngFor="let data of $any(list).value">
+          <!-- --------------------Questionerr-------------- -->
+          <!-- ----------multi choice------- -->
+          <ng-container *ngIf="
+              data.id.question.multipleChoice &&
+              data.id.question.multipleChoice.finalAnswer.length
+            ">
+            <div class="col-md-12">
+              <span style="color: grey">Q : {{ data.id.question.multipleChoice.title }}</span>
+              <div class="row mt-3">
+                <div class="col-md-2 pt-2 pb-2" *ngFor="
+                    let data of data.id.question.multipleChoice.finalAnswer
+                  ">
+                  <span class="ml-4 mr-5" style="display: inline-block">
+                    {{ data }}</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <!-- ---------multi text input--------- -->
+          <ng-container *ngIf="
+              data.id.question.multiTextInput &&
+              data.id.question.multiTextInput.finalAnswer.length
+            ">
+            <div class="row mt-3">
+              <div class="col-md-12" *ngIf="data?.id?.question?.multiTextInput?.finalAnswer[0].value"
+               >
+                <span style="color: grey">Q : {{ data.id.question.multiTextInput.title }}</span><br />
+              </div>
+              <div class="col-md-12 ml-2">
+                <ng-container *ngFor="
+                    let data of data.id.question.multiTextInput.finalAnswer
+                  ">
+                  <div class="row ml-3"  *ngIf="data.placeholder&& data.value">
+                    <div class="col-md-2 p-2" *ngIf="data.placeholder&& data.value">
+                      {{ data.placeholder }}
+                    </div>
+                    <div class="col-md-4 p-2">{{ data.value }}</div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+          <!-- ------------Single Choice---------- -->
+          <ng-container *ngIf="
+              data.id.question.singleChoice &&
+              data.id.question.singleChoice.finalAnswer.length
+            ">
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <span style="color: grey">Q : {{ data.id.question.singleChoice.title }}</span><br />
+
+                <span class="ml-4 mt-3" style="display: inline-block">
+                  {{ data.id.question.singleChoice.finalAnswer }}</span>
+              </div>
+            </div>
+          </ng-container>
+          <!-- -----------------Slider(Natural Report)----------- -->
+          <ng-container *ngIf="data.id.question.slider && reportType == 'naturalGifts'">
+            <div class="row mt-4">
+              <div class="col-md-3 ml-4">
+                <span style="color: white">{{ data.id.question.slider.title }} =
+                  <span>{{
+                    data.id.question.slider.finalAnswer.legend
+                    }}</span></span>
+              </div>
+            </div>
+          </ng-container>
+          <!-- -----------------Slider(Simple Report)----------- -->
+          <ng-container *ngIf="data.id.question.slider && reportType == 'simple'">
+            <div class="row mt-4">
+              <div class="col-md-3 ml-4">
+                <span style="color: white">{{ data.id.question.slider.title }} =
+                  <span>{{
+                    data.id.question.slider.finalAnswer.value
+                    }}</span></span>
+              </div>
+            </div>
+          </ng-container>
+          <!-- ---------Text AreA------------- -->
+          <ng-container *ngIf="
+              data.id.question.textArea &&
+              data.id.question.textArea.finalAnswer.length
+            ">
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <span style="color: grey">Q : {{ data.id.question.textArea.title }}</span><br />
+                <ng-container>
+                  <span class="ml-4 mt-3" style="display: inline-block">
+                    {{ data.id.question.textArea.finalAnswer }}</span>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+          <!-- -------------text input------------ -->
+          <ng-container *ngIf="
+              data.id.question.textInput &&
+              data.id.question.textInput.finalAnswer.length
+            ">
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <span style="color: grey">Q : {{ data.id.question.textInput.title }}</span><br />
+                <ng-container>
+                  <span class="ml-4 mt-3" style="display: inline-block">
+                    {{ data.id.question.textInput.finalAnswer }}</span>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <!-- ---------------------Questioner Dynamic----------- -->
+  <ng-container *ngFor="let list of questionerDynamicGroup | keyvalue; let i = index">
+    <div class="row header mt-4 m-0">
+      <div class="col-md-12">
+        <span class="d-flex justify-content-center" style="font-size: 19px">{{
+          list.key
+          }}</span>
+      </div>
+    </div>
+    <div class="row mt-4 m-0">
+      <ng-container *ngFor="let data of $any(list).value">
+        <!-- ----------MultiChoiceGroup------------ -->
+        <ng-container *ngIf="data.template.multipleChoice">
+          <ng-container *ngFor="
+              let key of data.template.multipleChoice.finalAnswer | keyvalue
+            ">
+            <span class="p-1" style="color: grey">Q : {{ key.key }}</span>
+
+            <div class="row p-2 ml-2">
+              <ng-container *ngFor="let values of $any(key).value">
+                <div class="col-md-3">
+                  {{ values.title }}
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+        <!-- -----------Slider-------->
+        <ng-container *ngIf="data.template.slider">
+          <div class="row mt-4">
+            <ng-container *ngFor="let answer of data.template.slider.finalAnswer">
+              <div class="col-md-3 pt-2 pb-2">
+                <span style="color: white">{{ answer.title }} = <span>{{ answer.legend }}</span></span>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <!-- ------TableDropDown(Slider)------- -->
+        <ng-container *ngIf="
+            data.template.tableDropDown &&
+            data.template.tableDropDown.source == 'slider'
+          ">
+          <div class="row mt-4 m-0">
+            <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center" style="color: grey">
+              {{ data.template.tableDropDown.colOneTitle }}
+            </div>
+            <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center" style="color: grey">
+              {{ data.template.tableDropDown.colTwoTitle }}
+            </div>
+            <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center" style="color: grey">
+              {{ data.template.tableDropDown.colThreeTitle }}
+            </div>
+          </div>
+          <div class="row m-0">
+            <ng-container *ngFor="
+                let data of data.template.tableDropDown.finalAnswer | keyvalue
+              ">
+              <ng-container *ngFor="let list of $any(data).value">
+                <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center">
+                  {{ list.title }}
+                </div>
+                <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center">
+                  {{ list.score }}
+                </div>
+                <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center">
+                  {{ list.groupName }}
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <!-- ------TableDropDown(MCQ)------- -->
+        <ng-container *ngIf="
+            data.template.tableDropDown &&
+            data.template.tableDropDown.source == 'multiChoiceGroup'
+          ">
+          <div class="row mt-4 m-0">
+            <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center" style="color: grey">
+              {{ data.template.tableDropDown.colOneTitle }}
+            </div>
+            <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center" style="color: grey">
+              {{ data.template.tableDropDown.colTwoTitle }}
+            </div>
+            <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center" style="color: grey">
+              {{ data.template.tableDropDown.colThreeTitle }}
+            </div>
+          </div>
+          <div class="row m-0">
+            <ng-container *ngFor="let data1 of data.template.tableDropDown.finalAnswer">
+              <ng-container *ngFor="let list of data1 | keyvalue">
+                <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center">
+                  {{ list.key }}
+                </div>
+                <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center">
+                  {{ $any(list.value).title }}
+                </div>
+                <div class="col-md-4 pt-2 pb-2 d-flex justify-content-center">
+                  {{ $any(list.value).rank }}
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <!-- ----------- -->
+
+  <div class="footer">
+    Copyright &#169; {{ updatedAt | date }} Glory Autotech LLP
+  </div>
+</div>
+<div style="visibility: hidden">
+  <button id="print" [printTitle]="appTitle" printSectionId="print-section" [useExistingCss]="true" ngxPrint></button>
+</div>

@@ -1,0 +1,290 @@
+<div class="row mt-3" style="margin: 0;">
+
+  <div class="col-md-5"></div>
+  <h4 class="col-md-3">Questionnaire Dynamic</h4>
+  <div class=" col-md-4 d-flex" style="align-items: center;justify-content: space-evenly;">
+    <i (click)="editQuestionerDynamic()" style="color: #e91e63;" class="fas fa-edit icon-color" aria-hidden="true"></i>
+    <i (click)="routeBack()" style="color: #e91e63;
+      font-size: 25px;" class="fa fa-arrow-circle-left pointer" aria-hidden="true"></i>
+  </div>
+
+</div>
+
+<div class="row" style="margin: 0;">
+  <div class="col-md-12">
+
+    <h4 class="ml-4" style="color: grey;">{{questionerDynamicTitle}}</h4>
+  </div>
+</div>
+<div class="row" style="margin: 0;">
+  <div class="col-md-6 ml-4 ">
+    <div class="d-flex">
+      <div *ngIf="this.active === false">
+        <div style="color:grey">Deactive</div>
+      </div>
+      <div *ngIf="this.active === true">
+        <div style="color:#e91e63">Active</div>
+      </div>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <!-- <div style="color:#e91e63">Active</div>
+      &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+      <ng-container *ngIf="group" >
+      <div style="color:grey">Group</div><span> : {{group}}</span></ng-container>
+
+    </div>
+
+  </div>
+</div>
+<div class="row m-0">
+  <div class="col-md-12 mt-3">
+    <p class="ml-4" style="color: grey;font-size:22px" >{{questionerDynamicDesc}}</p>
+  </div>
+</div>
+<div class="row mt-5" style="margin: 0;">
+
+  <div class="col-md-5"></div>
+  <h4 class="col-md-3">Template</h4>
+  <div class=" col-md-4 d-flex justify-content-center pointer" (click)="addTemplate()"><i class="fa fa-plus"
+      style="cursor: pointer;color:#e91e63" aria-hidden="true"></i>
+  </div>
+
+</div>
+<div class="row" style="margin: 0px;">
+  <ng-container>
+    <!-- ---------- Multiple choice Group--------- -->
+    <ng-container *ngIf="templateList?.template?.multipleChoice">
+      <div class="col-md-12" style="padding: 0px;">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1 pointer">1</div>
+
+          <div class="col-md-7 pointer">
+            <div>Multiple Choice Group</div>
+            <div class="d-flex">
+              <div style="color:grey">Source</div><span> : {{templateList.template.multipleChoice.source}}</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">MinAnswerLimit</div><span> :
+                {{templateList.template.multipleChoice.minAnswerCount?templateList.template.multipleChoice.minAnswerCount:0}}</span>&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">MaxAnswerLimit</div><span> :
+                {{templateList.template.multipleChoice.maxAnswerCount?templateList.template.multipleChoice.maxAnswerCount:0}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editMultipleChoiceGroup(templateList._id);$event.stopPropagation()">
+                <i style="color:#e91e63" class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)="deleteTemplate(templateList._id);$event.stopPropagation()">
+                <i style="color:#e91e63" class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- -------Slider------ -->
+    <ng-container *ngIf="templateList?.template?.slider">
+      <div class="col-md-12" style="padding: 0px;">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1 pointer">1</div>
+
+          <div class="col-md-7 pointer">
+            <div>Slider</div>
+            <div class="d-flex">
+              <div style="color:grey">Source</div><span> : {{templateList.template.slider.source}}</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">MinValue</div><span> : {{templateList.template.slider.minVal}}</span>&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">MaxValue</div><span> : {{templateList.template.slider.maxVal}}</span>&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">DefaultValue</div><span> :
+                {{templateList.template.slider.defaultAnswer}}</span>&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">FilterValue</div><span> : {{templateList.template.slider.filterOn ? templateList.template.slider.filterOn : ''}}</span>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editSlider(templateList._id);$event.stopPropagation()"><i
+                  class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i></div>
+              <div (click)="deleteTemplate(templateList._id);$event.stopPropagation()"> <i
+                  class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ------Table Drop Down-------- -->
+    <ng-container *ngIf="templateList?.template?.tableDropDown">
+      <div class="col-md-12" style="padding: 0px;">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1 pointer">1</div>
+
+          <div class="col-md-7 pointer">
+            <div>Table Drop Down</div>
+            <div class="d-flex">
+              <div style="color:grey">Source</div><span> : {{templateList.template.tableDropDown.source}}</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Columns</div><span> : 3</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Options</div><span> :
+                {{templateList.template.tableDropDown.options.length}}</span>&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editTableDropDown(templateList._id);$event.stopPropagation()"><i
+                  class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)="deleteTemplate(templateList._id);$event.stopPropagation()"> <i
+                  class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ------Table Skill-------- -->
+    <ng-container *ngIf="templateList?.template?.tableSkill">
+      <div class="col-md-12" style="padding: 0px;">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1 pointer">1</div>
+
+          <div class="col-md-7 pointer">
+            <div>Table Skill</div>
+            <div class="d-flex">
+              <div style="color:grey">Source</div><span> : {{templateList.template.tableSkill.source}}</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Columns</div><span> : 5</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Options</div><span> :
+                {{templateList.template.tableSkill.options.length}}</span>&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editTableSkill(templateList._id);$event.stopPropagation()"><i
+                  class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)="deleteTemplate(templateList._id);$event.stopPropagation()"> <i
+                  class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- ------Table Skill Trait-------- -->
+    <ng-container *ngIf="templateList?.template?.tableSkillTrait">
+      <div class="col-md-12" style="padding: 0px;">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1 pointer">1</div>
+
+          <div class="col-md-7 pointer">
+            <div>Table Skill Trait</div>
+            <div class="d-flex">
+              <div style="color:grey">Source</div><span> : {{templateList.template.tableSkillTrait.source}}</span>
+              &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editTableSkillTrait(templateList._id);$event.stopPropagation()"><i
+                  class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i></div>
+              <div (click)="deleteTemplate(templateList._id);$event.stopPropagation()"> <i
+                  class="fa fa-trash icon-color  pointer mt-2" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- -----------Table Trait---- -->
+    <ng-container *ngIf="templateList?.template?.tableTrait">
+      <div class="col-md-12" style="padding: 0px;">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1 pointer">1</div>
+
+          <div class="col-md-7 pointer">
+            <div>Table Trait</div>
+            <div class="d-flex">
+              <div style="color:grey">Source</div><span> : {{templateList.template.tableTrait.source}}</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Columns</div><span> :
+                {{templateList.template.tableTrait.columns.length}}</span>&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Options</div><span> :
+                {{templateList.template.tableTrait.values.length}}</span>&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editTableTrait(templateList._id);$event.stopPropagation()"><i
+                  class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)="deleteTemplate(templateList._id);$event.stopPropagation()"> <i
+                  class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- -----------Table Yes No------------ -->
+    <ng-container *ngIf="templateList?.template?.tableYesNo">
+      <div class="col-md-12" style="padding: 0px;">
+        <div class="d-flex" style="padding: 18px; border-bottom: 1px solid black;">
+
+
+          <div class="col-md-1 pointer">1</div>
+
+          <div class="col-md-7 pointer">
+            <div>Table Yes No</div>
+            <div class="d-flex">
+              <div style="color:grey">Source</div><span> : {{templateList.template.tableYesNo.source}}</span> &nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              <div style="color:grey">Options</div><span> : 2</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Label 1</div><span> :
+                {{templateList.template.tableYesNo.firstColumnTitle ? templateList.template.tableYesNo.firstColumnTitle:'Yes'
+                }}</span>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="color:grey">Label 2</div><span> :
+                {{templateList.template.tableYesNo.secondColumnTitle ? templateList.template.tableYesNo.secondColumnTitle:'No'
+                }}</span>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div (click)="editTableYesNo(templateList._id);$event.stopPropagation()"><i
+                  class="fas fa-edit icon-color pointer mt-2" aria-hidden="true"></i>
+              </div>
+              <div (click)="deleteTemplate(templateList._id);$event.stopPropagation()"> <i
+                  class="fa fa-trash icon-color pointer mt-2" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

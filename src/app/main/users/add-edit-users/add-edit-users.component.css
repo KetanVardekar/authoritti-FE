@@ -1,0 +1,10 @@
+.field-icon {
+  float: right;
+  margin-top: -31px;
+  z-index: 2;
+  margin-right: 10px;
+}
+input:read-only {
+  background-color: #73736f !important;
+}
+

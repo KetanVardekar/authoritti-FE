@@ -1,0 +1,41 @@
+<div class="row" style="margin: 0px;">
+  <div class="col-md-12">
+    <div class="container">
+      <div class="content-center">
+        <span class="d-flex justify-content-center">
+          <h4>Your Annual Financial Goal</h4>
+        </span>
+        <input class="form-control my-1" pattern="/d+" [(ngModel)]="appObj.annualGoal" #annualGoal1="ngModel" style="height: 50px;" type="number" min="0"
+          name="goal" id="goal" placeholder="Enter your Annual Goal" oninput="validity.valid||(value='');">
+        <!-- <small style="color: #e91e63;"
+          *ngIf="annualGoal1.errors?.['pattern']">Enter Positive Value</small> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="
+    background-color: #746868;
+    padding: 8px;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;">
+
+  <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'" style="padding: 0">
+    <div class="d-flex" style="justify-content: space-between">
+      <div class="ml-3 mt-1">
+        Page 1/7
+      </div>
+      <div class="d-flex">
+        <div [ngStyle]="{ 'cursor' : !appObj.annualGoal || appObj.annualGoal < 0 ? 'not-allowed' : 'pointer' }">
+          <button (click)="nextPage()" [disabled]="!appObj.annualGoal || appObj.annualGoal < 0" class="btn submit-btn"
+            style="background-color: #e91e63 !important">
+            Next
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

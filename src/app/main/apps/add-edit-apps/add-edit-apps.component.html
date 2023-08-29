@@ -1,0 +1,124 @@
+<div style="height: calc(93vh - 13px);overflow-y: auto;">
+  <form #myForm="ngForm" (ngSubmit)="myForm.form.valid ">
+    <div class="row" style="margin: 10px 15px;">
+
+      <div class="col-md-12">
+        <div class="mt-4 mb-3 d-flex" style="height: 30px;align-items: center;">
+          <input type="checkbox"  id="active" [(ngModel)]="addEditApp.active" [checked]="addEditApp.active"
+            name="active"  >
+          <label class="form-check-label pointer" for="active" style="margin-left: 5px;margin-top: 1px;">
+            Active
+          </label>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="exampleName">Name *</label>
+          <input type="text" name="name" class="form-control form-control-lg" id="exampleName" placeholder="Enter Name"
+            [(ngModel)]="addEditApp.name" #name="ngModel" required />
+          <small style="color: #e91e63;" *ngIf="(name.touched || myForm.submitted) && name.errors?.['required']">Name is
+            required</small>
+        </div>
+
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Title *</label>
+          <input type="text" name="title" class="form-control form-control-lg" id="exampleInputTitle"
+            aria-describedby="titleHelp" placeholder="Enter Title" [(ngModel)]="addEditApp.title" #title="ngModel"
+            required />
+          <small style="color: #e91e63;" *ngIf="(title.touched || myForm.submitted) && title.errors?.['required']">Title
+            is
+            required</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin: 10px 15px;">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="type">Type *</label>
+          <ng-select appendTo="body" name="type" required [(ngModel)]="addEditApp.type" placeholder="Select Type"
+            #type="ngModel" [readonly]="idOfApp">
+            <ng-option value="dynamic">Dynamic</ng-option>
+            <ng-option value="dynamicCustom">Dynamic + Custom</ng-option>
+          </ng-select>
+          <small style="color: #e91e63;" *ngIf="(type.touched || myForm.submitted) && type.errors?.['required']">Type
+            is
+            required</small>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <label for="">Icon *</label>
+        <ng-select appendTo="body" name="icon" [(ngModel)]="addEditApp.icon" placeholder="Select Icon" #icon="ngModel" required>
+          <ng-option value="fas fa-theater-masks" >
+            <div class="drop-down-img-col">
+              <i class="fas fa-theater-masks"></i>
+              <span class="select-text ml-2">Mask</span>
+            </div>
+          </ng-option>
+          <ng-option value="fas fa-bullseye">
+            <div class="drop-down-img-col">
+              <i class="fas fa-bullseye"></i>
+              <span class="select-text ml-2">BullsEye</span>
+            </div>
+          </ng-option>
+          <ng-option value="far fa-smile">
+            <div class="drop-down-img-col">
+              <i class="far fa-smile"></i>
+              <span class="select-text ml-2">Smile</span>
+            </div>
+          </ng-option>
+          <ng-option value="fas fa-gift">
+            <div class="drop-down-img-col">
+              <i class="fas fa-gift"></i>
+              <span class="select-text ml-2">Gift</span>
+            </div>
+          </ng-option>
+          <ng-option value="fas fa-yin-yang">
+            <div class="drop-down-img-col">
+              <i class="fas fa-yin-yang"></i>
+              <span class="select-text ml-2">Yin-Yang</span>
+            </div>
+          </ng-option>
+          <ng-option value="fas fa-book-open">
+            <div class="drop-down-img-col">
+              <i class="fas fa-book-open"></i>
+              <span class="select-text ml-2">Book</span>
+            </div>
+          </ng-option>
+          <ng-option value="fas fa-heart">
+            <div class="drop-down-img-col">
+              <i class="fas fa-heart"></i>
+              <span class="select-text ml-2">Heart</span>
+            </div>
+          </ng-option>
+          <ng-option value="fas fa-wrench">
+            <div class="drop-down-img-col">
+              <i class="fas fa-wrench"></i>
+              <span class="select-text ml-2">Spanner</span>
+            </div>
+          </ng-option>
+        </ng-select>
+        <small style="color: #e91e63;" *ngIf="(icon.touched || myForm.submitted) && icon.errors?.['required']">Icon
+          is
+          required</small>
+      </div>
+      <div class="col-md-12 d-flex" style="justify-content: space-evenly;">
+        <div style="margin-top: 39px">
+          <button type="submit" class="btn submit-btn" *ngIf=" !this.idOfApp" (click)="submit()" >
+            Submit
+          </button>
+          <button  class="btn submit-btn" *ngIf=" this.idOfApp" (click)="update()">
+            Update
+          </button>
+        </div>
+        <div style="margin-top:39px;">
+          <button class="btn submit-btn" style="background-color: #73736F !important;" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,47 @@
+<div class="row m-0">
+  <div class="col-md-12">
+    <table class="table mt-5" style="color: white; border-left: 3px solid black;">
+      <thead style="text-align: center;">
+
+        <tr>
+          <th scope="col">Skills</th>
+          <th scope="col">Average Score</th>
+          <th scope="col">{{tableSkillData.colOneTitle}}</th>
+          <th scope="col">{{tableSkillData.colTwoTitle}}</th>
+          <th scope="col">{{tableSkillData.colThreeTitle}}</th>
+          <th scope="col">{{tableSkillData.colFourTitle}}</th>
+          <th scope="col">{{tableSkillData.colFiveTitle}}</th>
+
+
+        </tr>
+
+      </thead>
+
+      <tbody style="text-align: center;">
+        <ng-container>
+          <tr *ngFor="let data of skillsValue| keyvalue;let i=index">
+
+            <td>{{data.key}}</td>
+            <td class="second-col">{{$any(data.value).score}}</td>
+
+            <td style="background-color: #f1aeba;"><input class="pointer" type="radio"
+                [value]="tableSkillData.colOneTitle" name="radiogroup-{{i}}"></td>
+            <td style="background-color: #f1aeba;"><input class="pointer" type="radio"
+                [value]="tableSkillData.colTwoTitle" name="radiogroup-{{i}}"></td>
+            <td style="background-color: #f1aeba;"><input class="pointer" type="radio"
+                [value]="tableSkillData.colThreeTitle" name="radiogroup-{{i}}"></td>
+            <td style="background-color: #f1aeba;"><input class="pointer" type="radio"
+                [value]="tableSkillData.colFourTitle" name="radiogroup-{{i}}"
+                [checked]="$any(data.value).colName == tableSkillData.colFourTitle"
+                (change)="colFour($event,tableSkillData.colFourTitle,data.key,$any(data.value).score)"></td>
+            <td style="background-color: #f1aeba;"><input class="pointer" type="radio"
+                [value]="tableSkillData.colFiveTitle" name="radiogroup-{{i}}"
+                [checked]="$any(data.value).colName == tableSkillData.colFiveTitle"
+                (change)="colFive($event,tableSkillData.colFiveTitle,data.key,$any(data.value).score)"></td>
+          </tr>
+        </ng-container>
+      </tbody>
+
+    </table>
+  </div>
+</div>

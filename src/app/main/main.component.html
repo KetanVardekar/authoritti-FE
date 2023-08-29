@@ -1,0 +1,12 @@
+<div class="row" style="margin: 0px;">
+  <div class="col-md-12" style="padding: 0px;position:fixed;top: 0;z-index: 9999;">
+    <app-header></app-header>
+  </div>
+  <div class="col-md-3" *ngIf="sidebarShow" style="padding: 0px;margin-top: 55px;border-right: 1px solid #e91e63;">
+    <app-sidebar [sidebarShow]="sidebarShow" [appsList]="appsList"></app-sidebar>
+  </div>
+  <div [ngClass]="sidebarShow ? 'col-md-9' : 'col-md-12'" style="padding: 0px;margin-top: 55px;height: calc(93vh - 13px);
+  overflow-y: hidden;">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.content-center{
+  margin: 0;
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+}
+.container{
+  position: relative;
+  height: 580px;
+  display: flex;
+  justify-content: center;
+}

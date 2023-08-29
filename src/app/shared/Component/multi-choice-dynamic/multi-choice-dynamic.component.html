@@ -1,0 +1,25 @@
+<ng-container *ngFor="let data of multiChoiceData | keyvalue;let i=index " >
+  <div class="row mb-4 ques-container">
+    <div class="col-md-12" style="padding: 0;">
+
+      <span class="index p-1">#{{i+ 1}}</span>
+
+      <div class="col-md-12 p-0 mt-3">
+        <span>{{data.key}}</span><br>
+
+      </div>
+      <div class="row mt-4">
+        <ng-container *ngFor="let list of $any(data).value" >
+        <div class="col-md-2 my-2" style="padding-right: 70px;">
+
+          <div class="d-flex" style="align-items: center;">
+            <input class="pointer" [id]="list.title"  type="checkbox" [checked]="list.checked" (change)="multiChoiceCheckbox($event ,i,list,data.key)" >
+              <label [for]="list.title" class="ml-3 pointer">{{list.title}}</label>
+          </div>
+
+        </div></ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>
+

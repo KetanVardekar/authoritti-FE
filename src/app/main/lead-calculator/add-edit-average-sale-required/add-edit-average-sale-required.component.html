@@ -1,0 +1,71 @@
+<div class="row" style="margin: 0px;">
+  <div class="col-md-12">
+
+    <span class="d-flex justify-content-center my-4">
+      <h4>Average Sales Required Per Annum To Achieve Annual Goal</h4>
+    </span>
+  </div>
+
+
+  <div class="row my-3" style="text-align: center;">
+    <div class="col-md-4">
+      <span>Product / Service</span>
+    </div>
+    <div class="col-md-4">
+      <span>Dollar Per Item</span>
+    </div>
+    <div class="col-md-4">
+      <span>Total Sales per Item</span>
+    </div>
+  </div>
+
+  <div style="max-height: 49vh;overflow-y: auto;">
+    <div class="row my-3" *ngFor="let item of this.appObj['averageSaleRequired'];let i = index"
+      style="text-align: center;">
+      <div class="col-md-4">
+        <span>{{item.product}}</span>
+      </div>
+      <div class="col-md-4">
+        <span>$ {{item.dollarPerItem | number}}</span>
+      </div>
+      <div class="col-md-4">
+        <span>$ {{item.totalSalesPerItem | number}}</span>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+<div class="row" style="
+    background-color: #746868;
+    padding: 8px;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;">
+
+  <div [ngClass]="showSidebar ? 'col-md-9' : 'col-md-12'" style="padding: 0">
+    <div class="d-flex" style="justify-content: space-between">
+      <div class="ml-3 mt-1">
+        Page 3/7
+      </div>
+      <div class="d-flex">
+        <div>
+          <button (click)="previousPage()" class="btn submit-btn" style="background-color: #020201 !important">
+            Previous</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <button (click)="nextPage()" class="btn submit-btn" style="background-color: #e91e63 !important">
+            Next
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

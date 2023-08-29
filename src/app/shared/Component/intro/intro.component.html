@@ -1,0 +1,18 @@
+<div>
+  <div class="row mb-5" style="margin: 0;">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center mt-5"> <span>{{data.title}}</span></div>
+      <div class="d-flex justify-content-center mt-3"> <span style="color:grey;width: 42%;">{{data.description}}</span></div>
+    </div>
+  </div>
+  <div class="row" style="margin: 0;">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center">
+        <iframe width="550" height="290" [src]="data.videolink | safe">
+
+        </iframe>
+      </div>
+    </div>
+  </div>
+</div>
+

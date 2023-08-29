@@ -1,0 +1,142 @@
+<div id="print-section">
+  <div class="row" style="margin: 0px;">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center">
+        <img class="authoritti-img" src="../../../../assets/images/report-white.png" style="max-width: 32%;" alt="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-5">
+        <div class="d-flex justify-content-center">
+          <span>
+            {{userData.name}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;{{updatedAt | date}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-4">
+        <div class="d-flex justify-content-center">
+          <span style="font-size:25px ;">
+            {{appTitle}} Report
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic -->
+    <ng-container *ngFor="let data of questionerDynamicGroup| keyvalue">
+      <div class="row header mt-4">
+        <div class="col-md-12">
+
+          <div class="d-flex justify-content-center">
+            <span>{{data.key}}</span>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngFor="let item of $any(data).value">
+        <!-- Table Skill -->
+        <ng-container *ngIf="item?.template?.tableSkillTrait?.skillsFinalAnswer">
+          <div class="row m-0">
+            <div class="col-md-12">
+              <table class="table mt-5" style="background-color: #EF5EA7">
+                <thead style="text-align: center;">
+
+                  <tr>
+                    <th scope="col" style="color:white">Skills</th>
+                    <th scope="col" style="color:white">Average Score</th>
+                    <th scope="col" style="color:white">Use</th>
+                  </tr>
+
+                </thead>
+
+                <tbody style="text-align: center;">
+
+                  <tr *ngFor="let skills of $any(item?.template?.tableSkillTrait?.skillsFinalAnswer)">
+
+                    <td class="first-col">{{skills.skillName}}</td>
+                    <td class="second-col">{{skills.avgScore}}</td>
+                    <td class="second-col">{{skills.colName}}</td>
+
+
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </ng-container>
+<!-- ------------------------ -->
+        <!-- Table Trait -->
+        <ng-container *ngIf="item?.template?.tableSkillTrait?.traitsFinalAnswer">
+          <div class="row m-0">
+            <div class="col-md-12">
+              <table class="table mt-5" style="background-color: #EF5EA7">
+                <thead style="text-align: center;">
+
+                  <tr>
+                    <th scope="col" style="color:white">Skills</th>
+                    <th scope="col" style="color:white">Average Score</th>
+                    <th scope="col" style="color:white">Use</th>
+                    <th scope="col" style="color:white">Dominant</th>
+                  </tr>
+
+                </thead>
+
+                <tbody style="text-align: center;">
+
+                  <tr *ngFor="let traits of $any(item?.template?.tableSkillTrait?.traitsFinalAnswer)">
+
+                    <td class="first-col">{{traits.skillName}}</td>
+                    <td class="second-col">{{traits.avgScore}}</td>
+                    <td class="second-col">{{traits.colName}}</td>
+                    <td class="second-col">{{traits.dominant}}</td>
+
+
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- ------------------ -->
+      </ng-container>
+    </ng-container>
+
+    <div class="row header mt-4">
+
+      <div class="col-md-12">
+        <div class="d-flex justify-content-center">
+          <span>Your Strengths</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row p-0">
+      <ng-container *ngFor="let data of mainCategoryHeading">
+        <div class="col-md-6 p-0">
+          <span class="d-flex justify-content-center p-2"
+            style="border-bottom: 1px solid black ;  box-shadow: 2px 0px 2px 0px black !important;">
+            <span>{{data.name}}</span></span>
+        </div>
+        <div class="col-md-6 p-0">
+          <span class="d-flex justify-content-center p-2"
+            style="border-bottom: 1px solid black ;  box-shadow: 2px 0px 2px 0px black !important;">
+            <span style="margin-left: -33px;">{{data.score}}</span></span>
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+  <div class="footer">Copyright &#169; {{updatedAt | date}} Glory Autotech LLP</div>
+</div>
+<div style="visibility: hidden;">
+  <button id="print" [printTitle]="appTitle" printSectionId="print-section" [useExistingCss]="true" ngxPrint></button>
+</div>
